@@ -1,4 +1,6 @@
 import IndividualLogin from './views/IndividualLogin.vue'
+import Profile from './views/Profile'
+
 
 export const routes = [
     {
@@ -6,4 +8,9 @@ export const routes = [
         name: 'IndividualLogin',
         component: IndividualLogin
     },
+    {
+        path:'/profile',
+        name:'profile',
+        component: Profile
+      },
 ]
