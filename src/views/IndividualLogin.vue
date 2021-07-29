@@ -2,14 +2,17 @@
   <v-app>
     <v-content class="background-color">
       <v-container class="fill-height">
+        <img src="../assets/void-logo.png" alt="" />
+
         <v-row align="center" justify="center">
           <v-col cols="4">
+            <p>V01D</p>
             <div class="title display-10">
-              <h1>Açık iş ve staj imkanlarını bulun</h1>
+              <h1>Genç yetenekler için açılan fırsat kapılarına ulaş</h1>
             </div>
           </v-col>
           <v-col cols="6" offset="1" lg="4">
-            <v-card class="text-center mt-12" shaped elevation="10">
+            <v-card class="text-center mt-6" shaped elevation="10">
               <v-window v-model="step">
                 <v-window-item :value="1">
                   <div class="text-right mt-4 pr-10">
@@ -18,10 +21,11 @@
                     </v-icon>
                     <a href="#" style="#00000;">Kurumsal Giriş Yap </a>
                   </div>
-                  <h2 class="text-center darken-3--text text--lighten-2 mt-10">
-                    VO1D
+
+                  <h2 class="text-center darken-3--text text--lighten-2 mt-6">
+                    Bireysel Giriş
                   </h2>
-                  <v-card-text class="pa-14">
+                  <v-card-text class="pa-12">
                     <v-form>
                       <v-text-field
                         v-model="user.userName"
@@ -200,16 +204,25 @@ export default {
 .background-color {
   background: linear-gradient(to top right, #02c3bd -22%, #533a71 82%);
 }
-
+img {
+  width: 150px;
+  max-width: 100%;
+  height: auto;
+}
 a:hover {
   font-size: 18px;
 }
-
+p {
+  font-size: 100px;
+  font-weight: bold;
+  color: white;
+  font-family: "Mukta", sans-serif;
+}
 h1 {
   text-align: left;
   color: white;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  line-height: 50px;
+  font-family: "Mukta", sans-serif;
+  line-height: 60px;
   font-size: 50px;
 }
 h2 {
