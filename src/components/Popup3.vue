@@ -10,13 +10,13 @@
         <v-cart-text>
        <v-cart-text>
         <v-form class="mt-3 pa-3" ref="form">
-            <label for=""> 1)Daha önce çalıştığınız kurumları giriniz..</label>
+            <!-- <label for=""> 1)Daha önce çalıştığınız kurumları giriniz..</label>
             <v-textarea label="Title" v-model="kurum"  >
               
-            </v-textarea>
-            <input type ="file"><button>Yükle!</button>
+            </v-textarea> -->
+            <v-file-input v-model="selectedFile" @change="onFileSelected" />
              
-            <v-btn right flat class="success " @click="submit">Kaydet</v-btn>
+            <v-btn right dark flat class="deep-purple darken-3"  @click="onUpload">Kaydet</v-btn>
            
         </v-form>
         </v-cart-text>
@@ -30,12 +30,19 @@
 export default {
     data(){
       return{
-        kurum:''
+        kurum:'',
+        selectedFile:'null'
       }
     },
     methods:{
       submit(){
         this.$emit("kurum",this.kurum)
+      },
+      onFileSelected(event){
+        this.selectedFile=event.target.files[0]
+      },
+      onUpload(){
+        this.$emit("selectedFile",this.selectedFile)
       }
     }
 }

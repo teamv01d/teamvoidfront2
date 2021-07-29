@@ -16,7 +16,7 @@
             </v-text-field>
              <label for=""> 2) Bölümünüzü giriniz..</label>
             <v-text-field label="Title" v-model="department"  > </v-text-field>
-            <v-btn right flat class="success " @click="submit">Kaydet</v-btn>
+            <v-btn right flat dark class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
            
         </v-form>
         </v-cart-text>

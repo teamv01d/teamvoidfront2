@@ -21,7 +21,7 @@
             <v-textarea label="Title" v-model="yourself"  >
               
             </v-textarea>
-            <v-btn right flat class="success " @click="submit">Kaydet</v-btn>
+            <v-btn right flat  dark class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
            
         </v-form>
         </v-cart-text>

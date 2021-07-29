@@ -33,7 +33,7 @@
             <h3> Bölüm : {{department}}</h3>
             <h3> Telefon Numarası :{{phone}}</h3>
             <h3>Mail Adresi: nisancliik7@gmail.com</h3>
-            <h3>CV :</h3>
+            <h3>CV : {{selectedFile}}</h3>
            
             
 
@@ -43,7 +43,7 @@
               <h2 class="my-5">Bilgileri Düzenle <v-icon right>edit</v-icon> </h2> 
               <Popup1 @birthday="birthday=$event" @city="city=$event" @yourself="yourself=$event"   />  <br> <br>
               <Popup2  @university="university=$event"  @department="department=$event"/>  <br> <br>
-              <Popup3 />  <br> <br>
+              <Popup3 @selectedFile="selectedFile=$event"/>  <br> <br>
               <Popup4 @phone="phone=$event" />  <br> <br>
             </v-flex>   
         
@@ -76,7 +76,7 @@ export default {
            yourself:'',
            university:'',
            department:'',
-           
+           selectedFile:'',
            phone:'',
           
        }

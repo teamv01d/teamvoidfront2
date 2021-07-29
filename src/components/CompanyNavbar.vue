@@ -6,27 +6,27 @@
              
              <img  class="mr-2" height="70px" :src="avatar" alt="">
             V01D
-             
-           
-
-             
-               
-               
+         
            </v-toolbar-title>
            <v-spacer></v-spacer>
-            <router-link to="/profile" tag="v-btn">
-            <v-btn color="white" class="mr-2 white" flat value="profile" >
+            <router-link to="/company" tag="v-btn">
+            <v-btn color="white" class="mr-2 white" flat value="company" >
            <span>Profil</span>  <v-icon right >person</v-icon>
            </v-btn>
           </router-link>
-          <router-link to="/ilanlar" tag="v-btn">
+          <router-link to="/ilanekle" tag="v-btn">
             <v-btn color="white" class="mr-2 white" flat value="profile" >
-           <span > İlanlar</span>  <v-icon right>library_books</v-icon> 
+           <span > İlan Ekle</span>  <v-icon right>add</v-icon> 
            </v-btn>
           </router-link>
-          <router-link to="/basvurularim" tag="v-btn">
+          <router-link to="/ilanlarim" tag="v-btn">
             <v-btn color="white" class="mr-2 white" flat value="profile" >
-           <span >Başvurularım</span> <v-icon right>call_made</v-icon> 
+           <span > İlanlarım</span>  <v-icon right>library_books</v-icon> 
+           </v-btn>
+          </router-link>
+          <router-link to="/basvurular" tag="v-btn">
+            <v-btn color="white" class="mr-2 white" flat value="profile" >
+           <span >Başvurular</span> <v-icon right>call_made</v-icon> 
            </v-btn>
           </router-link>
            <router-link to="/logout" tag="v-btn">

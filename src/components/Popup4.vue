@@ -16,7 +16,7 @@
               
             </v-text-field>
            
-            <v-btn right flat class="success " @click="submit">Kaydet</v-btn>
+            <v-btn right dark flat class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
            
         </v-form>
       
