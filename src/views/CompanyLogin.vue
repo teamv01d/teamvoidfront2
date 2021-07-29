@@ -5,25 +5,13 @@
         <img src="../assets/void-logo.png" alt="" />
 
         <v-row align="center" justify="center">
-          <v-col cols="4">
-            <p>V01D</p>
-            <div class="title display-10">
-              <h1>Genç yetenekler için açılan fırsat kapılarına ulaş</h1>
-            </div>
-          </v-col>
-          <v-col cols="6" offset="1" lg="4">
+          <v-col lg="4">
+            <h3>VO1D</h3>
             <v-card class="text-center mt-6" shaped elevation="10">
               <v-window v-model="step">
                 <v-window-item :value="1">
-                  <div class="text-right mt-4 pr-10">
-                    <v-icon color="#02c3bd" dense left>
-                      mdi-account-key
-                    </v-icon>
-                    <router-link to="/company">Kurumsal Giriş Yap</router-link>
-                  </div>
-
                   <h2 class="text-center darken-3--text text--lighten-2 mt-6">
-                    Bireysel Giriş
+                    Kurumsal Giriş
                   </h2>
                   <v-card-text class="pa-12">
                     <v-form>
@@ -88,7 +76,7 @@
                           <v-form @submit.prevent="onSubmit">
                             <v-text-field
                               v-model="user.name"
-                              label="İsim"
+                              label="Yetkili İsim"
                               name="Name"
                               prepend-inner-icon="person"
                               type="text"
@@ -98,9 +86,19 @@
                             />
                             <v-text-field
                               v-model="user.surname"
-                              label="Soyisim"
+                              label="Yetkili Soyisim"
                               name="SurName"
                               prepend-inner-icon="person"
+                              type="text"
+                              color="black lighten-3"
+                              outlined
+                              class="rounded-0"
+                            />
+                            <v-text-field
+                              v-model="user.name"
+                              label="Kurum İsim"
+                              name="CompanyName"
+                              prepend-inner-icon="mdi-home"
                               type="text"
                               color="black lighten-3"
                               outlined
@@ -227,5 +225,12 @@ h1 {
 }
 h2 {
   font-size: 30px;
+}
+h3 {
+  text-align: center;
+  color: white;
+  font-family: "Mukta", sans-serif;
+  line-height: 60px;
+  font-size: 50px;
 }
 </style>
