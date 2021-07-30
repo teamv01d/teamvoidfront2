@@ -21,14 +21,13 @@
                     </v-icon>
                     <router-link to="/company">Kurumsal Giriş Yap</router-link>
                   </div>
-
                   <h2 class="text-center darken-3--text text--lighten-2 mt-6">
                     Bireysel Giriş
                   </h2>
                   <v-card-text class="pa-12">
-                    <v-form>
+                    <v-form @submit.prevent="signin">
                       <v-text-field
-                        v-model="user.userName"
+                        v-model="user.email"
                         label="E-posta adresi"
                         name="Email"
                         prepend-inner-icon="email"
@@ -38,7 +37,7 @@
                         class="rounded-0"
                       />
                       <v-text-field
-                        v-model="user.userPassword"
+                        v-model="user.password"
                         id="password"
                         label="Şifre"
                         name="password"
@@ -50,11 +49,17 @@
                         outlined
                         class="rounded-0"
                       />
-                    </v-form>
-                    <div>
-                      <v-btn class="rounded-0" color="#02c3bd" large block dark
+                      <v-btn
+                        type="submit"
+                        class="rounded-0"
+                        color="#02c3bd"
+                        large
+                        block
+                        dark
                         >GİRİŞ YAP</v-btn
                       >
+                    </v-form>
+                    <div>
                       <br />
                       <v-btn
                         color="#02c3bd"
@@ -66,6 +71,9 @@
                       >
                         <v-icon dense left> mdi-account-key </v-icon>Kayıt Ol
                       </v-btn>
+                    </div>
+                    <div v-if="submitted" class="mt-4">
+                      <h3>Giriş başarılı.</h3>
                     </div>
                   </v-card-text>
                 </v-window-item>
@@ -171,6 +179,7 @@
 
 <script>
 import endpoint from "@/lib/api";
+
 export default {
   data: () => {
     return {
@@ -183,9 +192,25 @@ export default {
       step: 1,
       showPassword: false,
       submitted: false,
+      token: null,
     };
   },
   methods: {
+    signin() {
+      const data = { email: this.user.email, password: this.user.password };
+      console.log(data);
+      this.$axios
+        .post(endpoint.auth.login, data)
+        .then((response) => {
+          console.log(response);
+          localStorage.setItem("token", response.data);
+          this.submitted = "true";
+        })
+        .catch((e) => console.log(e));
+
+      this.$router.push("/company");
+    },
+
     onSubmit() {
       this.$axios
         .post(endpoint.auth.register, this.user)

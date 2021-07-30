@@ -1,3 +1,4 @@
+
 import IndividualLogin from './views/IndividualLogin.vue'
 import CompanyLogin from './views/CompanyLogin.vue'
 import TestSolve from './views/TestSolve.vue'
