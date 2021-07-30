@@ -2,27 +2,48 @@
 <div class="company">
     <CompanyNavbar />
      <h1  class="text-center mt-10 mb-15"><span>KURUM PROFİLİ</span></h1>
-     <v-container class="mt-10">
-         
-              
-               <h2 class="mb-15"> VİZYONER GENÇ</h2>
-              <v-layout row>
-                  <v-flex md8>
-                      <h4  class="mb-4"> <v-icon> public</v-icon> Web Adresimiz: </h4>
+     
+      
+     <v-container class="mt-10 boyut" >
+            <v-layout>
+               <v-spacer></v-spacer> <Popup />
+            </v-layout>
+                <v-layout row class="mt-10">
+                  
+                <v-flex xs2>
+                <h2 class="mb-15 "> Kurum Adı: </h2>
+                <h4  class="mb-4"> <v-icon> public</v-icon> Web Adresimiz:  </h4>
                 <h4  class="mb-4"> <v-icon> email</v-icon> E-mail: </h4> 
-                  </v-flex>
-                  <v-flex md4> 
-                      <Popup />
-                  </v-flex>
-              </v-layout>
                
-               <h3 class="text-center mt-16 mb-5">HAKKIMIZDA</h3>
-               <p class="text-center ">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis aliquid pariatur, est iste ad atque! Modi et ipsum ducimus eligendi sapiente. Vero iusto sed officiis a, iste consequuntur inventore aliquid neque dolores odit architecto id, repellat earum maiores quo cumque autem? Ullam odit excepturi quidem impedit incidunt fugiat magni necessitatibus ducimus eligendi dolore pariatur eos veniam modi suscipit repellat, beatae totam, eius error animi quasi! Amet deserunt explicabo distinctio natus aspernatur praesentium optio numquam eveniet aliquid accusantium ea pariatur, dolor reiciendis adipisci fugiat, nobis fugit repellendus. Totam quod id est sint deleniti ipsum dicta corrupti dolorum, perferendis repellat fugit doloremque.</p>
+              
+               
+               
+                </v-flex> 
+                <div v-for="postList in postList" :key="postList">
+                <v-flex xs10> 
+                
+                <h2 class="mb-15"> {{postList.kurum}} </h2>
+                <h4  class="mb-4">   {{postList.web}} </h4>
+                <h4  class="mb-4"> </h4> 
+
+               </v-flex>
+              
+               </div> 
+              </v-layout>
+               <div class="text-center"  v-for="postList in postList" :key="postList" >
+                <h3 class=" mt-16 mb-16 text-center ">HAKKIMIZDA </h3>   
+                <p>{{postList.aboutus}}</p>
+                 </div>
+               
+              
+            <br> <br>
+      
     
-
-
-
-     </v-container>    
+      
+     </v-container> 
+     
+     
+    <Footer />
 
 
 </div>
@@ -31,18 +52,46 @@
 
 <script>
 import CompanyNavbar from '../components/CompanyNavbar.vue'
-import Popup from '../components/Popup5.vue'
+import Popup from '../components/Popup2.vue'
+import Footer from '../components/Footer.vue'
+import axios from 'axios'
+
 export default {
+   
    components:{
        CompanyNavbar,
-       Popup
-   }
+       Popup,
+       Footer :Footer,
+   },
+   data(){
+       return{
+           postList:[
+         
+           ],
+       }
+   },
+   mounted(){
+      
+        axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+        .then(response => {
+             let data = response.data;
+         
+          for(let key in data){
+            this.postList.push({ ...data[key], id : key })
+          }
+        })
+        .catch(e =>console.log(e)) 
+    }
+
+   
+ 
+ 
 }
 </script>
 <style scoped>
 .company{
      background-color:#EDE7F6;
-     height: 1000px;
+    
 }
 h1{
     font-size: 40px;
@@ -52,5 +101,8 @@ h2{
 }
 h3{
     font-size: 25px;
+}
+.boyut{
+height: 500px;
 }
 </style>

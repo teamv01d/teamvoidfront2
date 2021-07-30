@@ -1,17 +1,12 @@
 <template>
     <nav>
        
-       <v-toolbar class="renk" app height="80" >
+       <v-toolbar class="renk" app height="90" >
            <v-toolbar-title  class="font-weight-bold white--text ml-3">
              
-             <img  class="mr-2" height="70px" :src="avatar" alt="">
-            V01D
-             
-           
+             <img  class="mr-2 mt-5" height="50px" :src="avatar" alt="" />
+             <p class="ml-1">V01D</p>
 
-             
-               
-               
            </v-toolbar-title>
            <v-spacer></v-spacer>
             <router-link to="/profile" tag="v-btn">

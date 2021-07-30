@@ -24,63 +24,85 @@
            <hr>
           
            <v-layout row class="mt-10">
-            <v-flex md8>
-            <h2 class="my-5">Bilgilerim</h2>
-            <h3> Doğum Tarihi : {{birthday}} </h3>
-            <h3> Şehir : {{city}}</h3> 
-            <h3> Hakkımda :{{yourself}}</h3>
-            <h3> Üniversite : {{university}}</h3>
-            <h3> Bölüm : {{department}}</h3>
-            <h3> Telefon Numarası :{{phone}}</h3>
-            <h3>Mail Adresi: nisancliik7@gmail.com</h3>
-            <h3>CV : {{selectedFile}}</h3>
+            <v-flex md3>
            
-            
-
-
+            <h2 class="my-5">Bilgilerim</h2>
+            <h3> Doğum Tarihi : </h3> 
+            <h3> Şehir : </h3> 
+            <h3> Üniversite : </h3>
+            <h3> Bölüm : </h3>
+            <h3> Telefon Numarası :</h3>
+            <h3>Mail Adresi: </h3>
+             <h3> Hakkımda :</h3>
+            <h3>CV : </h3>
+         
             </v-flex>  
+            <v-flex md5>
+            <div v-for="postList in postList" :key="postList">
+            <h2 class="my-5"> - </h2>
+            <h3> {{postList.birthday}}  </h3>
+            <h3> {{postList.city}} </h3> 
+            <h3> {{postList.university}} </h3>
+            <h3> {{postList.department}} </h3>
+            <h3> {{postList.phone}}</h3>
+            <h3>-</h3>
+            <h3> {{postList.yourself}}</h3>
+            <h3>{{postList.selectedFile}} </h3>
+            </div>
+            </v-flex>
             <v-flex md4>
               <h2 class="my-5">Bilgileri Düzenle <v-icon right>edit</v-icon> </h2> 
-              <Popup1 @birthday="birthday=$event" @city="city=$event" @yourself="yourself=$event"   />  <br> <br>
-              <Popup2  @university="university=$event"  @department="department=$event"/>  <br> <br>
-              <Popup3 @selectedFile="selectedFile=$event"/>  <br> <br>
-              <Popup4 @phone="phone=$event" />  <br> <br>
+                <Popup1  />  <br> <br> 
+             
             </v-flex>   
         
          </v-layout>
+         
+
         </v-container>
+         <Footer class="footer"  />
     </div>
+   
 </template>
 <script>
 
-import Popup2 from '../components/Popup2.vue'
 import Popup1 from '../components/Popup1.vue'
-import Popup3 from '../components/Popup3.vue'
-import Popup4 from '../components/Popup4.vue'
+
 import Navbar from '../components/Navbar.vue'
+import Footer from '../components/Footer'
+import axios from 'axios'
 export default {
     components:{
         Navbar,
         Popup1,
-        Popup2,
-        Popup3,
-        Popup4,
+       
+        Footer,
     },
    data() {
        return {
-           user:[
+           postList:[
+         
+           ],
+            user:[
                { user:'nisanur celik',avatar:'/nisanurcelik.jpg'}
            ],
-           birthday:'',
-           city:'',
-           yourself:'',
-           university:'',
-           department:'',
-           selectedFile:'',
-           phone:'',
+           
           
        }
-   }
+   },
+    mounted(){
+      
+        axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+        .then(response => {
+             let data = response.data;
+         
+          for(let key in data){
+            this.postList.push({ ...data[key], id : key })
+          }
+        })
+        .catch(e =>console.log(e)) 
+    }
+
    
    
 }
@@ -92,6 +114,10 @@ h3{
 .profile{
     background-color:#EDE7F6;
 
+}
+.footer{    
+    margin-bottom:-100px;
+    margin-top:70px;
 }
 
 </style>                    
