@@ -198,7 +198,6 @@ export default {
   methods: {
     signin() {
       const data = { email: this.user.email, password: this.user.password };
-      console.log(data);
       this.$axios
         .post(endpoint.auth.login, data)
         .then((response) => {

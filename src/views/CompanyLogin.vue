@@ -1,5 +1,7 @@
 <template>
   <v-app>
+    <h4 v-if!="user">{{ isUser() }}</h4>
+
     <v-content class="background-color">
       <v-container class="fill-height">
         <img src="../assets/void-logo.png" alt="" />
@@ -184,6 +186,10 @@ export default {
     };
   },
   methods: {
+    isUser() {
+      localStorage.getItem("token");
+    },
+
     onSubmit() {
       this.$axios
         .post(endpoint.auth.register, this.user)
