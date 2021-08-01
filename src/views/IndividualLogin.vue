@@ -204,10 +204,9 @@ export default {
           console.log(response);
           localStorage.setItem("token", response.data);
           this.submitted = "true";
+          this.$router.push("/company");
         })
         .catch((e) => console.log(e));
-
-      this.$router.push("/company");
     },
 
     onSubmit() {
