@@ -14,9 +14,9 @@
                     Kurumsal Giriş
                   </h2>
                   <v-card-text class="pa-12">
-                    <v-form>
+                    <v-form @submit.prevent="signin">
                       <v-text-field
-                        v-model="user.userName"
+                        v-model="companies.email"
                         label="E-posta adresi"
                         name="Email"
                         prepend-inner-icon="email"
@@ -26,7 +26,7 @@
                         class="rounded-0"
                       />
                       <v-text-field
-                        v-model="user.userPassword"
+                        v-model="companies.password"
                         id="password"
                         label="Şifre"
                         name="password"
@@ -38,11 +38,17 @@
                         outlined
                         class="rounded-0"
                       />
-                    </v-form>
-                    <div>
-                      <v-btn class="rounded-0" color="#02c3bd" large block dark
+                      <v-btn
+                        type="submit"
+                        class="rounded-0"
+                        color="#02c3bd"
+                        large
+                        block
+                        dark
                         >GİRİŞ YAP</v-btn
                       >
+                    </v-form>
+                    <div>
                       <br />
                       <v-btn
                         color="#02c3bd"
@@ -75,27 +81,7 @@
 
                           <v-form @submit.prevent="onSubmit">
                             <v-text-field
-                              v-model="user.name"
-                              label="Yetkili İsim"
-                              name="Name"
-                              prepend-inner-icon="person"
-                              type="text"
-                              color="black lighten-3"
-                              outlined
-                              class="rounded-0"
-                            />
-                            <v-text-field
-                              v-model="user.surname"
-                              label="Yetkili Soyisim"
-                              name="SurName"
-                              prepend-inner-icon="person"
-                              type="text"
-                              color="black lighten-3"
-                              outlined
-                              class="rounded-0"
-                            />
-                            <v-text-field
-                              v-model="user.name"
+                              v-model="companies.company_name"
                               label="Kurum İsim"
                               name="CompanyName"
                               prepend-inner-icon="mdi-home"
@@ -105,7 +91,7 @@
                               class="rounded-0"
                             />
                             <v-text-field
-                              v-model="user.email"
+                              v-model="companies.email"
                               label="E-posta Adresi"
                               name="Email"
                               prepend-inner-icon="email"
@@ -116,7 +102,7 @@
                             />
 
                             <v-text-field
-                              v-model="user.password"
+                              v-model="companies.password"
                               id="password"
                               label="Şifre"
                               name="password"
@@ -172,9 +158,8 @@ import endpoint from "@/lib/api";
 export default {
   data: () => {
     return {
-      user: {
-        name: "",
-        surname: "",
+      companies: {
+        company_name: "",
         password: "",
         email: "",
       },
@@ -184,15 +169,21 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
+    signin() {
+      const data = {
+        email: this.companies.email,
+        password: this.companies.password,
+      };
       this.$axios
-        .post(endpoint.auth.register, this.user)
+        .post(endpoint.auth.companyLogin, data)
         .then((response) => {
           console.log(response);
-          this.user = {};
+          localStorage.setItem("token", response.data);
           this.submitted = "true";
         })
         .catch((e) => console.log(e));
+
+      this.$router.push("/testSolve");
     },
   },
 };
