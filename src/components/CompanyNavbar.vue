@@ -14,7 +14,7 @@
            <span>Profil</span>  <v-icon right >person</v-icon>
            </v-btn>
           </router-link>
-          <router-link to="/ilanekle" tag="v-btn">
+          <router-link to="/advertisement" tag="v-btn">
             <v-btn color="white" class="mr-2 white" flat value="profile" >
            <span > İlan Ekle</span>  <v-icon right>add</v-icon> 
            </v-btn>

@@ -65,9 +65,9 @@ export default {
    },
    data(){
        return{
-           postList:[
-         
-           ],
+           postList: []
+
+           
        }
    },
    mounted(){
@@ -75,6 +75,7 @@ export default {
         axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
         .then(response => {
              let data = response.data;
+            
          
           for(let key in data){
             this.postList.push({ ...data[key], id : key })

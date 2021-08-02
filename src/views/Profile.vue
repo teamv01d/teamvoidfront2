@@ -40,13 +40,13 @@
             <v-flex md5>
             <div v-for="postList in postList" :key="postList">
             <h2 class="my-5"> - </h2>
-            <h3> {{postList.birthday}}  </h3>
+            <h3> {{postList.birthdate}}  </h3>
             <h3> {{postList.city}} </h3> 
             <h3> {{postList.university}} </h3>
-            <h3> {{postList.department}} </h3>
+            <h3> {{postList.faculty}} </h3>
             <h3> {{postList.phone}}</h3>
             <h3>-</h3>
-            <h3> {{postList.yourself}}</h3>
+            <h3> {{postList.about}}</h3>
             <h3>{{postList.selectedFile}} </h3>
             </div>
             </v-flex>
@@ -70,7 +70,9 @@ import Popup1 from '../components/Popup1.vue'
 
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer'
-import axios from 'axios'
+import endpoint from "@/lib/api";
+
+// import axios from 'axios'
 export default {
     components:{
         Navbar,
@@ -92,19 +94,25 @@ export default {
    },
     mounted(){
       
-        axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+    // axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+       this.$axios.get(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'))
         .then(response => {
              let data = response.data;
          
           for(let key in data){
             this.postList.push({ ...data[key], id : key })
           }
+          console.log("deneme")
         })
-        .catch(e =>console.log(e)) 
-    }
+        
 
-   
-   
+        .catch(e =>console.log(e));
+
+    
+    
+
+    
+    }
 }
 </script>
 <style scoped>

@@ -12,7 +12,7 @@
         <v-form class="mt-3 pa-3" ref="form">
             <label for=""> 1) Doğum tarihini giriniz..</label>
             <span></span>
-            <v-text-field placeholder="xx/xx/xxxx formatında giriniz.." label="Title" v-model="post.birthday"  >
+            <v-text-field placeholder="xx/xx/xxxx formatında giriniz.." label="Title" v-model="post.birthdate"  >
               
             </v-text-field>
              <label for=""> 2) Yaşadığınız şehri giriniz..</label>
@@ -24,7 +24,7 @@
               
             </v-text-field>
             <label for=""> 4) Bölümünüzü giriniz..</label>
-            <v-text-field label="Title" v-model="post.department"  > </v-text-field>
+            <v-text-field label="Title" v-model="post.faculty"  > </v-text-field>
            
               <label for=""> 5) Telefon numaranızı giriniz..</label>
             <span></span>
@@ -32,11 +32,11 @@
               
             </v-text-field>
              <label for=""> 6)Kendinizi kısaca anlatınız..</label>
-            <v-textarea label="Title" v-model="post.yourself"  >
+            <v-textarea label="Title" v-model="post.about"  >
               
             </v-textarea>
               <label for=""> 7) CV ekleyiniz..</label>
-            <v-file-input v-model="post.selectedFile" @change="onFileSelected" />
+            <v-file-input v-model="post.cv" @change="onFileSelected" />
             <v-btn right flat  dark class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
            
         </v-form>
@@ -47,18 +47,20 @@
 
 </template>
 <script>
-import axios from 'axios'
+import endpoint from "@/lib/api";
+
 export default {
   data(){
     return{
       post:{ 
-        birthday:'',
+       birthdate:'',
        city:'',
        university:'',
-      department:'',
+      faculty:'',
       phone:'',
-      yourself:'',
-      selectedFile:'null'
+      about:'',
+      cv:null
+     
 
     }
      
@@ -67,35 +69,45 @@ export default {
   methods:{
      
    submit(){
-        
-         axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+        var formData = new FormData();
+        formData.append("birthdate",this.post.birthdate);
+        formData.append("city", this.post.city);
+        formData.append(" university", this.post. university);
+        formData.append("faculty", this.post.faculty);
+        formData.append("phone", this.post.phone);
+        formData.append("about", this.post.about);
+       // formData.append("cv", fileInputElement.files[0]);
+
+
+      
+        // this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
+          this.$axios.get(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'))
         .then(response => {
+          console.log("basarili get")
          if(!response.data)
          {
-        axios.post("https://profile-67e3f-default-rtdb.firebaseio.com/posts/.json",{...this.post})
+        this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
        .then(response =>{
-         console.log(response)
+         console.log(response,"basarili post")
          this.post ={}
        })
          }
          else{
-            axios.put("https://profile-67e3f-default-rtdb.firebaseio.com/posts/-Mfq_smqrYFXTiZ1forZ/.json",{...this.post})
+           this.$axios.patch(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
         .then(response =>{
-         console.log(response,"degistirildi")
+        console.log(response,"basarili patch")
          this.post ={}
        })
          }
          
         })
+      
      
-
-
-
-
-       .catch(e => console.log(e));
+       .catch(e => console.log(e))
         
 
       },
+
     
   }
    

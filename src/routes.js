@@ -1,6 +1,7 @@
 import IndividualLogin from './views/IndividualLogin.vue'
 import Profile from './views/Profile'
 import CompanyProfile from './views/CompanyProfile'
+import AddAdvertisemnt from './views/AddAdvertisemnt'
 
 
 export const routes = [
@@ -18,6 +19,11 @@ export const routes = [
         path:'/company',
         name:'company',
         component: CompanyProfile
+      },
+      {
+        path:'/advertisement',
+        name:'advertisement',
+        component: AddAdvertisemnt
       },
 
 ]
