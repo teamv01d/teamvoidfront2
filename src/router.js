@@ -1,7 +1,13 @@
+import Vue from "vue";
 import IndividualLogin from './views/IndividualLogin.vue'
 import CompanyLogin from './views/CompanyLogin.vue'
 import TestSolve from './views/TestSolve.vue'
-export const routes = [
+import VueRouter from 'vue-router';
+
+
+Vue.use(VueRouter);
+
+const routes = [
     {
         path: '/',
         name: 'IndividualLogin',
@@ -17,4 +23,13 @@ export const routes = [
         name: 'TestSolve',
         component: TestSolve
     },
-]
+    {
+        path: '*',
+        redirect: '/'
+    }
+];
+
+export const router = new VueRouter({
+    mode: "history",
+    routes
+});
