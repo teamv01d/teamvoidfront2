@@ -1,19 +1,17 @@
 <template>
   <div>
-    <div>
-      <p class="text-h6 r">Soru Sayısı: {{ questionList.length }}</p>
-    </div>
-    <v-card max-width="1500">
-      <v-row>
-        <v-col cols="7" offset="1">
-          <v-card max-width="1200" tile>
-            <v-window v-model="onboarding" reverse>
-              <v-window-item v-for="data in questionList" :key="data">
-                <v-card height="350" elevation="0" class="mt-8">
+    <v-card class="mt-16 mb-16" elevation="0">
+      <v-row class="ma-6">
+        <v-col cols="6">
+          <v-card elevation="4">
+            <v-window v-model="onboarding">
+              <v-window-item v-for="(data, index) in questionList" :key="data">
+                <v-card width="800" height="300" elevation="0" class="mt-8">
                   <div class="fill-height mt-16">
-                    <p style="font-size: 2rem">
+                    <span style="font-size: 1.8rem"> {{ index + 1 }}.</span>
+                    <span style="font-size: 1.6rem">
                       {{ data.question1 }}
-                    </p>
+                    </span>
                     <v-divider></v-divider>
                     <div class="mt-6 mb-10">
                       <input
@@ -58,38 +56,21 @@
             </v-window>
             <v-card-actions class="justify-space-between">
               <v-item-group v-model="onboarding" class="text-center" mandatory>
-                <v-item
-                  v-for="data in questionList"
-                  :key="data"
-                  v-slot="{ active, toggle }"
-                >
-                  <v-btn :input-value="active" icon @click="toggle">
-                    <v-icon>mdi-record</v-icon>
-                  </v-btn>
-                </v-item>
               </v-item-group>
               <v-btn @click="next" :disabled="clickable" v-model="terms">
                 <v-icon x-large>mdi-arrow-right-thick</v-icon>
               </v-btn>
             </v-card-actions>
           </v-card>
+          <v-btn class="mt-8 mb-6" type="submit" color="#02c3bd" dark large>
+            SINAVI BİTİR</v-btn
+          >
         </v-col>
-        <v-col cols="3">
-          <v-row rows="4" no-gutters>
-            <section id="app" class="hero is-info is-fullheight is-bold">
-              <div class="hero-body">
-                <div class="container has-text-centered">
-                  <div id="timer">
-                    <span id="minutes">{{ minutes }}</span>
-                    <span id="middle">:</span>
-                    <span id="seconds">{{ seconds }}</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </v-row>
-          <h3 class="mb-2">Cevaplar</h3>
+        <v-col cols="2" offset="1">
+          <v-row rows="2" offset="2" no-gutters> </v-row>
+          <BaseTimer :time_limit="questionList.length * 60"></BaseTimer>
           <v-container>
+            <h3 class="mb-2">Cevaplar</h3>
             <v-layout wrap>
               <v-flex v-for="data in questionList" :key="data">
                 <v-btn class="question-box ma-2"> A </v-btn>
@@ -104,12 +85,14 @@
 
 <script>
 //import endpoint from "@/lib/api";
+import BaseTimer from "./BaseTimer.vue";
 export default {
+  components: {
+    BaseTimer,
+  },
   data: () => {
     return {
       questionList: [],
-      timer: null,
-      totalTime: 25 * 60,
       selectedAnswer: "",
       terms: false,
       onboarding: 0,
@@ -128,23 +111,10 @@ export default {
         }
       })
       .catch((e) => console.log(e));
-
-    /*starts the timer when the screen is load.*/
     this.timer = setInterval(() => this.countdown(), 1000);
+    /*starts the timer when the screen is load.*/
   },
   methods: {
-    padTime: function (time) {
-      return (time < 10 ? "0" : "") + time;
-    },
-    countdown: function () {
-      if (this.totalTime >= 1) {
-        this.totalTime--;
-      } else {
-        this.totalTime = 0;
-        this.resetTimer();
-      }
-    },
-
     /* runs the forward button of the window.*/
     next() {
       this.onboarding =
@@ -160,16 +130,6 @@ export default {
       }
       return this.terms;
     },
-
-    /* creates a time picker that displays the exam time*/
-    minutes: function () {
-      const minutes = Math.floor(this.totalTime / 60);
-      return this.padTime(minutes);
-    },
-    seconds: function () {
-      const seconds = this.totalTime - this.minutes * 60;
-      return this.padTime(seconds);
-    },
   },
 };
 </script>
@@ -178,12 +138,17 @@ export default {
 div {
   margin: 0 auto;
 }
-.r {
+span {
+  font-size: 32px;
+}
+.timePicker {
+  text-align: center;
+  border: 2px solid #d32f2f;
+  background-color: #ef9a9a;
+}
+.infoPanel {
   padding-left: 30px;
   margin: 0 auto;
-  margin: 20px 200px 20px 200px;
-  background-color: #c7c6c5;
-  border: 2px solid #bdbcbb;
 }
 .question-box {
   border: 2px solid #bdbcbb;
