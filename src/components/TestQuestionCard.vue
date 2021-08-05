@@ -10,7 +10,7 @@
                   <div class="fill-height mt-16">
                     <span style="font-size: 1.8rem"> {{ index + 1 }}.</span>
                     <span style="font-size: 1.6rem">
-                      {{ data.question1 }}
+                      {{ data.question }}
                     </span>
                     <v-divider></v-divider>
                     <div class="mt-6 mb-10">
@@ -22,7 +22,8 @@
                         name="fav_language"
                         value="HTML"
                       />
-                      <label for="html"> HTML</label><br />
+                      <label for="html"> {{ data.A }}</label
+                      ><br />
                       <input
                         v-model="selectedAnswer"
                         class="mb-4"
@@ -31,7 +32,8 @@
                         name="css"
                         value="CSS"
                       />
-                      <label for="css"> CSS</label><br />
+                      <label for="css"> {{ data.B }}</label
+                      ><br />
                       <input
                         v-model="selectedAnswer"
                         class="mb-4"
@@ -40,7 +42,8 @@
                         name="javascript"
                         value="javascript"
                       />
-                      <label for="css"> JAVASCRIPT</label><br />
+                      <label for="css"> {{ data.C }}</label
+                      ><br />
                       <input
                         v-model="selectedAnswer"
                         type="radio"
@@ -48,7 +51,8 @@
                         name="vue"
                         value="vue"
                       />
-                      <label for="css"> VUE.JS</label><br />
+                      <label for="css"> {{ data.D }}</label
+                      ><br />
                     </div>
                   </div>
                 </v-card>
@@ -73,7 +77,7 @@
             <h3 class="mb-2">Cevaplar</h3>
             <v-layout wrap>
               <v-flex v-for="data in questionList" :key="data">
-                <v-btn class="question-box ma-2"> A </v-btn>
+                <v-btn name="change" class="question-box ma-2"> </v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -84,7 +88,7 @@
 </template>
 
 <script>
-//import endpoint from "@/lib/api";
+import endpoint from "@/lib/api";
 import BaseTimer from "./BaseTimer.vue";
 export default {
   components: {
@@ -99,26 +103,34 @@ export default {
     };
   },
   created() {
-    /* when the page starts the post request and gets the values into an array.*/
-    this.$axios
-      .get("https://void-9c2d3-default-rtdb.firebaseio.com/posts.json")
-      .then((response) => {
-        console.log(response);
-        let data = response.data;
-        for (let key in data) {
-          this.questionList.push({ ...data[key], id: key });
-          console.log(key);
-        }
-      })
-      .catch((e) => console.log(e));
-    this.timer = setInterval(() => this.countdown(), 1000);
-    /*starts the timer when the screen is load.*/
+    this.loadQuestions();
   },
   methods: {
+    /* when the page starts the post request and gets the values into an array.*/
+    async loadQuestions() {
+      this.$axios
+        .get(endpoint.auth.testSolve)
+        .then((response) => {
+          console.log(response);
+          let data = response.data;
+          for (let key in data) {
+            this.questionList.push({ ...data[key], id: key });
+            console.log(key);
+          }
+        })
+        .catch((e) => console.log(e));
+    },
     /* runs the forward button of the window.*/
     next() {
       this.onboarding =
         this.onboarding + 1 === this.length ? 0 : this.onboarding + 1;
+
+      var sections = document.getElementsByName("change");
+      var i;
+
+      for (i = 0; i < sections.length; i++) {
+        sections[i].style.backgroundColor = "#02c3bd";
+      }
     },
   },
   computed: {
@@ -141,22 +153,8 @@ div {
 span {
   font-size: 32px;
 }
-.timePicker {
-  text-align: center;
-  border: 2px solid #d32f2f;
-  background-color: #ef9a9a;
-}
-.infoPanel {
-  padding-left: 30px;
-  margin: 0 auto;
-}
 .question-box {
   border: 2px solid #bdbcbb;
   text-align: center;
-}
-#timer {
-  font-size: 50px;
-  line-height: 1;
-  margin-bottom: 40px;
 }
 </style>
