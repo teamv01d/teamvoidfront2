@@ -8,7 +8,9 @@
               <v-window-item v-for="(data, index) in questionList" :key="data">
                 <v-card width="800" height="300" elevation="0" class="mt-8">
                   <div class="fill-height mt-16">
-                    <span style="font-size: 1.8rem"> {{ index + 1 }}.</span>
+                    <span style="font-size: 1.8rem">
+                      {{ index + 1 }}/{{ questionList.length }}:
+                    </span>
                     <span style="font-size: 1.6rem">
                       {{ data.question }}
                     </span>
@@ -18,9 +20,9 @@
                         v-model="selectedAnswer"
                         class="mb-4"
                         type="radio"
-                        id="html"
-                        name="fav_language"
-                        value="HTML"
+                        id="a"
+                        name="section_a"
+                        :value="data.A"
                       />
                       <label for="html"> {{ data.A }}</label
                       ><br />
@@ -28,9 +30,9 @@
                         v-model="selectedAnswer"
                         class="mb-4"
                         type="radio"
-                        id="css"
-                        name="css"
-                        value="CSS"
+                        id="b"
+                        name="section_b"
+                        :value="data.B"
                       />
                       <label for="css"> {{ data.B }}</label
                       ><br />
@@ -38,24 +40,34 @@
                         v-model="selectedAnswer"
                         class="mb-4"
                         type="radio"
-                        id="javascript"
-                        name="javascript"
-                        value="javascript"
+                        id="c"
+                        name="section_c"
+                        :value="data.C"
                       />
                       <label for="css"> {{ data.C }}</label
                       ><br />
                       <input
                         v-model="selectedAnswer"
                         type="radio"
-                        id="vue"
-                        name="vue"
-                        value="vue"
+                        id="d"
+                        name="section_d"
+                        :value="data.D"
                       />
                       <label for="css"> {{ data.D }}</label
                       ><br />
                     </div>
                   </div>
                 </v-card>
+                <v-btn
+                  @click="finishTest"
+                  class="mt-8 mb-6"
+                  type="submit"
+                  color="#02c3bd"
+                  dark
+                  large
+                >
+                  SINAVI BİTİR</v-btn
+                >
               </v-window-item>
             </v-window>
             <v-card-actions class="justify-space-between">
@@ -66,9 +78,6 @@
               </v-btn>
             </v-card-actions>
           </v-card>
-          <v-btn class="mt-8 mb-6" type="submit" color="#02c3bd" dark large>
-            SINAVI BİTİR</v-btn
-          >
         </v-col>
         <v-col cols="2" offset="1">
           <v-row rows="2" offset="2" no-gutters> </v-row>
@@ -77,7 +86,7 @@
             <h3 class="mb-2">Cevaplar</h3>
             <v-layout wrap>
               <v-flex v-for="data in questionList" :key="data">
-                <v-btn name="change" class="question-box ma-2"> </v-btn>
+                <v-btn class="question-box ma-2"> </v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -90,6 +99,7 @@
 <script>
 import endpoint from "@/lib/api";
 import BaseTimer from "./BaseTimer.vue";
+
 export default {
   components: {
     BaseTimer,
@@ -100,6 +110,8 @@ export default {
       selectedAnswer: "",
       terms: false,
       onboarding: 0,
+      counter: 0,
+      data: [],
     };
   },
   created() {
@@ -112,25 +124,43 @@ export default {
         .get(endpoint.auth.testSolve)
         .then((response) => {
           console.log(response);
-          let data = response.data;
-          for (let key in data) {
-            this.questionList.push({ ...data[key], id: key });
+          this.data = response.data;
+          console.log(this.data);
+          for (let key in this.data) {
+            this.questionList.push({ ...this.data[key], id: key });
             console.log(key);
           }
         })
         .catch((e) => console.log(e));
     },
-    /* runs the forward button of the window.*/
+    /* runs the forward button of the window, checks the correct answers and calculates number of correct answers.*/
     next() {
       this.onboarding =
         this.onboarding + 1 === this.length ? 0 : this.onboarding + 1;
-
-      var sections = document.getElementsByName("change");
-      var i;
-
-      for (i = 0; i < sections.length; i++) {
-        sections[i].style.backgroundColor = "#02c3bd";
+      let i = 0;
+      for (i = 0; i < this.data.length; i++) {
+        if (this.selectedAnswer == this.data[i].answer) {
+          this.counter++;
+        }
       }
+    },
+    finishTest() {
+      if (this.selectedAnswer == this.data[this.data.length - 1].answer) {
+        this.counter++;
+      }
+      alert("Sınavınız bitmiştir.");
+      this.$router.push("/company");
+      this.postCount();
+    },
+    /*posts the user's number of correct answers*/
+    postCount() {
+      const data = { count: this.counter };
+      this.$axios
+        .post(endpoint.auth.testSolve, data)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((e) => console.log(e));
     },
   },
   computed: {
