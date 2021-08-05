@@ -14,7 +14,7 @@
                 </v-flex>
                  <v-flex md8  > 
                      <div class="user-info mt-10">
-                         <h3 class="mb-3"> Ad-Soyad : NİSANUR ÇELİK</h3>
+                         <h3 class="mb-3"> Ad-Soyad : {{postList.name}} {{postList.surname}}</h3>
                         
                      </div>
                   
@@ -35,7 +35,7 @@
             <h3>Mail Adresi: </h3>
              <h3> Hakkımda :</h3>
             <h3>CV : </h3>
-         
+           
             </v-flex>  
             <v-flex md5>
             <div v-for="postList in postList" :key="postList">
@@ -45,7 +45,7 @@
             <h3> {{postList.university}} </h3>
             <h3> {{postList.faculty}} </h3>
             <h3> {{postList.phone}}</h3>
-            <h3>-</h3>
+            <h3>{{postList.email}}</h3>
             <h3> {{postList.about}}</h3>
             <h3>{{postList.selectedFile}} </h3>
             </div>
@@ -82,12 +82,15 @@ export default {
     },
    data() {
        return {
+           chosenFile:null,
            postList:[
          
            ],
             user:[
                { user:'nisanur celik',avatar:'/nisanurcelik.jpg'}
            ],
+           previews: [],
+errorImage: "url of an image to use to indicate an error",
            
           
        }
@@ -112,7 +115,15 @@ export default {
     
 
     
+    },
+    methods:{
+        gor(){
+            console.log(this.chosenFile)
+        }
     }
+
+   
+
 }
 </script>
 <style scoped>

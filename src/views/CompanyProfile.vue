@@ -4,7 +4,7 @@
      <h1  class="text-center mt-10 mb-15"><span>KURUM PROFİLİ</span></h1>
      
       
-     <v-container class="mt-10 boyut" >
+     <v-container class="mt-10 " >
             <v-layout>
                <v-spacer></v-spacer> <Popup />
             </v-layout>
@@ -103,7 +103,5 @@ h2{
 h3{
     font-size: 25px;
 }
-.boyut{
-height: 500px;
-}
+
 </style>

@@ -36,10 +36,16 @@
               
             </v-textarea>
               <label for=""> 7) CV ekleyiniz..</label>
-            <v-file-input v-model="post.cv" @change="onFileSelected" />
+            <input type="file" accept="application/pdf" id="file" ref="file" v-on:change="handleFileUpload()"/>
+            <!-- <img :src="post.imageUrl" alt=""> -->
+            <pdf :src="post.imageUrl">  </pdf>
+
+
             <v-btn right flat  dark class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
            
         </v-form>
+      
+       
         </v-cart-text>
      
       </v-card>
@@ -48,8 +54,13 @@
 </template>
 <script>
 import endpoint from "@/lib/api";
+import pdf from 'vue-pdf'
 
 export default {
+  components:{
+    pdf
+
+  },
   data(){
     return{
       post:{ 
@@ -59,7 +70,8 @@ export default {
       faculty:'',
       phone:'',
       about:'',
-      cv:null
+      cv:null,
+      imageUrl: null
      
 
     }
@@ -69,6 +81,7 @@ export default {
   methods:{
      
    submit(){
+        console.log(this.post.cv)
         var formData = new FormData();
         formData.append("birthdate",this.post.birthdate);
         formData.append("city", this.post.city);
@@ -76,7 +89,8 @@ export default {
         formData.append("faculty", this.post.faculty);
         formData.append("phone", this.post.phone);
         formData.append("about", this.post.about);
-       // formData.append("cv", fileInputElement.files[0]);
+        formData.append('file', this.post.cv);
+     
 
 
       
@@ -107,6 +121,11 @@ export default {
         
 
       },
+      handleFileUpload(){
+        const file = this.$refs.file.files[0];
+      this.post.cv = file
+      this.post.imageUrl = URL.createObjectURL(file)
+      }
 
     
   }

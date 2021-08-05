@@ -11,11 +11,11 @@
           <v-layout row>
             <v-flex xs6 offset-xs3 class="sorular" >
                
-            <h3> 1. {{que.soru}} </h3>
-             <h3> A) {{que.a}} </h3>
-            <h3> B) {{que.b}}  </h3>
-            <h3> C) {{que.c}} </h3> 
-            <h3> D) {{que.d}} </h3> 
+            <h3> {{index+1}}. {{que.content}} </h3>
+             <h3> A) {{que.asik}} </h3>
+            <h3> B) {{que.bsik}}  </h3>
+            <h3> C) {{que.csik}} </h3> 
+            <h3> D) {{que.dsik}} </h3> 
             <v-btn @click="goster"> </v-btn>
 
             </v-flex>
