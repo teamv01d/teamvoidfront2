@@ -86,7 +86,8 @@
             <h3 class="mb-2">Cevaplar</h3>
             <v-layout wrap>
               <v-flex v-for="data in questionList" :key="data">
-                <v-btn class="question-box ma-2"> </v-btn>
+                <v-btn id="name" @click="next" class="question-box ma-2">
+                </v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -143,14 +144,13 @@ export default {
           this.counter++;
         }
       }
-    },
-    finishTest() {
-      if (this.selectedAnswer == this.data[this.data.length - 1].answer) {
-        this.counter++;
-      }
-      alert("Sınavınız bitmiştir.");
-      this.$router.push("/company");
-      this.postCount();
+
+      // var buttonElements = document.getElementsByTagName("button");
+      // for (i = 0; i < buttonElements.length; i++) {
+      //   if (i == this.onboarding) {
+      //     buttonElements[i].style.background = "green";
+      //   }
+      // }
     },
     /*posts the user's number of correct answers*/
     postCount() {
@@ -161,6 +161,19 @@ export default {
           console.log(response);
         })
         .catch((e) => console.log(e));
+    },
+
+    finishTest() {
+      let i = 0;
+      for (i = 0; i < this.data.length; i++) {
+        if (this.selectedAnswer == this.data[i].answer) {
+          this.counter++;
+        }
+      }
+      alert("Sınavınız bitmiştir.");
+      this.$router.push("/company");
+      console.log(this.counter);
+      //this.postCount();
     },
   },
   computed: {
