@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark padless>
+  <v-footer app bottom dark padless>
     <v-card class="flex" flat tile>
       <v-card-title class="deep-purple darken-4">
         <strong>Genç yetenekler için açılan fırsat kapılarına ulaş!</strong>
