@@ -1,6 +1,7 @@
 export default {
     auth: {
         register: "users",
-        testSolve: "advertisementquestion"
+        testSolve: "advertisementquestion",
+        companyApplicants: "applicant"
     }
 }
