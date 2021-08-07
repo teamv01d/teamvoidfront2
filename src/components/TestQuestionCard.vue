@@ -73,7 +73,7 @@
             <v-card-actions class="justify-space-between">
               <v-item-group v-model="onboarding" class="text-center" mandatory>
               </v-item-group>
-              <v-btn @click="next" :disabled="clickable" v-model="terms">
+              <v-btn @click="next(data)" :disabled="clickable" v-model="terms">
                 <v-icon x-large>mdi-arrow-right-thick</v-icon>
               </v-btn>
             </v-card-actions>
@@ -85,8 +85,12 @@
           <v-container>
             <h3 class="mb-2">Cevaplar</h3>
             <v-layout wrap>
-              <v-flex v-for="data in questionList" :key="data">
-                <v-btn id="name" @click="next" class="question-box ma-2">
+              <v-flex v-for="(data, index) in questionList" :key="data">
+                <v-btn
+                  :color="data.solved ? '#02c3bd' : '#ffff'"
+                  class="question-box ma-2"
+                >
+                  {{ index + 1 }}
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -113,6 +117,7 @@ export default {
       onboarding: 0,
       score: 0,
       data: [],
+      currentQuestion: 0,
     };
   },
   created() {
@@ -136,6 +141,8 @@ export default {
     },
     /* runs the forward button of the window, checks the correct answers and calculates number of correct answers.*/
     next() {
+      this.questionList[this.currentQuestion].solved = true;
+      this.currentQuestion++;
       this.onboarding =
         this.onboarding + 1 === this.length ? 0 : this.onboarding + 1;
       let i = 0;
@@ -144,14 +151,8 @@ export default {
           this.score++;
         }
       }
-
-      // var buttonElements = document.getElementsByTagName("button");
-      // for (i = 0; i < buttonElements.length; i++) {
-      //   if (i == this.onboarding) {
-      //     buttonElements[i].style.background = "green";
-      //   }
-      // }
     },
+
     /*posts the user's number of correct answers*/
     postCount() {
       const data = { count: this.score };
@@ -170,6 +171,7 @@ export default {
           this.score++;
         }
       }
+
       alert("Sınavınız bitmiştir.");
       this.postCount();
       this.$router.push("/company");
