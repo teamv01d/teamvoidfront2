@@ -7,11 +7,15 @@
             <v-layout row justify-space-around class="mb-5"> 
                 <v-flex > 
                    
-                   <v-responsive>
+                   <v-responsive>  
                        <v-avatar size="180" class="grey lighten-2">
                             <img :src="rsm" alt="">
                        </v-avatar>
+                      <br>
+                         <Popup3 />
                    </v-responsive>
+                
+                 
                 </v-flex>
                  <v-flex md8  > 
                      <div class="user-info mt-10">
@@ -118,6 +122,7 @@
 
 import Popup1 from '../components/Popup1.vue'
 
+import Popup3 from '../components/Popup3.vue'
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer'
 import endpoint from "@/lib/api";
@@ -126,7 +131,9 @@ export default {
     components:{
         Navbar,
         Popup1,
-        Footer
+        Footer,
+        Popup3,
+      
     },
    data() {
        return {
@@ -134,10 +141,10 @@ export default {
            postList:[
               
            ],
-         
+        
         
           rsm:'/us2.png',
-
+        
        
            
           
@@ -146,18 +153,13 @@ export default {
     mounted(){
       
   
-       this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
+       this.$axios.get(endpoint.auth.profile)
         .then(response => {
              let data = response.data;
              console.log(data)
              this.postList.push(data);
-         
-        //   for(let key in data){
-        //     this.postList.push({ ...data[key], id : key })
-        //     console.log(key)
-        //   }
-          //console.log(this.postList)
-         this.rsm=this.postList.foto
+       
+         this.rsm=this.postList[0].photo
         })
         
 
@@ -171,7 +173,11 @@ export default {
     methods:{
         gor(){
             console.log(this.chosenFile)
+        },
+        deneme(){
+
         }
+       
     }
 
    

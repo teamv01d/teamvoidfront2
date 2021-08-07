@@ -1,6 +1,7 @@
 export default {
     auth: {
         register: "users",
-        profile: "users/{id}",
+        profile: "users/profile",
+        photo:"users/photo"
     }
 }

@@ -328,10 +328,14 @@ export default {
        
         },
         checkstatus(sor){
-          const nisa=this.onizlemesoru.filter((val)=>{
+          let nisa = []
+          if (this.onizlemesoru.length > 0) {
+             nisa=this.onizlemesoru.filter((val)=>{
             return sor.question=== val.question
 
           })
+          }
+         
           return nisa.length>0
 
         },
@@ -380,7 +384,7 @@ export default {
         },
         approve(){
           if(this.bla.question && this.bla.optiona && this.bla.optionb && this.bla.optionc && this.bla.optiond && this.bla.answer )
-        {  this.onizlemesoru.push(this.bla)
+        {  this.onizlemesoru.push({...this.bla})
           alert("sorular eklendi");
          
           this.testsorulari=false

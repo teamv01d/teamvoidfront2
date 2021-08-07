@@ -3,6 +3,8 @@ import Profile from './views/Profile'
 import CompanyProfile from './views/CompanyProfile'
 import AddAdvertisemnt from './views/AddAdvertisemnt'
 import Application from './views/Application'
+import AboutUs from './views/AboutUs'
+
 
 
 export const routes = [
@@ -30,7 +32,15 @@ export const routes = [
         path:'/application',
         name:'application',
         component:Application
+      },
+      {
+        path:'/aboutus',
+        name:'aboutus',
+        component:AboutUs
       }
+     
+    
+
      
     
 

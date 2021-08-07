@@ -33,18 +33,9 @@
             </v-text-field>
              <label for=""> 6)Kendinizi kısaca anlatınız..</label>
             <v-textarea label="Title" v-model="post.about"  >  </v-textarea>
-              
+           
             
-              <label for=""> 7) Fotoğraf ekleyiniz..</label><br>
-              <imageInput
-               v-model="post.image"
-              uploadIcon='+' flipHorizontallyIcon="" flipVerticallyIcon	="" rotateCounterClockwiseIcon="Sola döndür" rotateClockwiseIcon="Sağa Döndür"
-
-
-            
-              />
-              <br>
-              <label for=""> 8) CV ekleyiniz..</label>
+              <label for=""> 7) CV ekleyiniz..</label>
             <input type="file" accept="application/pdf" id="file" ref="file" v-on:change="handleFileUpload()"/>
             
             <!-- <pdf :src="post.imageUrl">  </pdf> -->
@@ -63,14 +54,11 @@
 </template>
 <script>
 import endpoint from "@/lib/api";
-// import pdf from 'vue-pdf'
-import imageInput from 'vuetify-image-input'
+
 
 export default {
   components:{
-    // pdf,
-    imageInput,
-  
+ 
   },
   data(){
     return{
@@ -82,9 +70,6 @@ export default {
       phone:'',
       about:'',
       cv:null,
-      imageUrl: null,
-      image:null,
-   
      
 
     },
@@ -104,26 +89,34 @@ export default {
         formData.append("faculty", this.post.faculty);
         formData.append("phone", this.post.phone);
         formData.append("about", this.post.about);
-         formData.append("foto", this.post.image);
         formData.append('file', this.post.cv);
      
 
 
       
         // this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
-        this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
+        this.$axios.get(endpoint.auth.profile)
         .then(response => {
+
           console.log("basarili get")
          if(!response.data)
          {
-        this.$axios.post(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'),formData)
+        this.$axios.post(endpoint.auth.profile,{formData,
+        token:localStorage.getItem("token")
+        })
+       
        .then(response =>{
-         console.log(response,"basarili post")
+         
+         console.log(response.data)
+         
          this.post ={}
        })
          }
          else{
-           this.$axios.patch(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'),formData)
+           this.$axios.patch(endpoint.auth.profile.replace,{
+             formData,
+             token:localStorage.getItem("token")
+           })
         .then(response =>{
         console.log(response,"basarili patch")
          this.post ={}
