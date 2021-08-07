@@ -14,22 +14,31 @@
                 <v-row align="center" class="spacer" no-gutters>
                   <v-col cols="4" sm="2" md="1">
                     <v-avatar size="52px">
-                      <img
-                        v-if="avatar"
-                        alt="Avatar"
-                        src="../assets/void-logo.png"
-                      />
+                      <li v-for="item in data.usersprofile" :key="item">
+                        <img :src="item.photo" />
+                      </li>
                     </v-avatar>
                   </v-col>
 
                   <v-col class="hidden-xs-only content-size" sm="5" md="3">
-                    <strong {{data.name}}></strong>
-                    <strong {{data.surname}}></strong>
+                    <li v-for="item in data.usersprofile" :key="item">
+                      {{ item.name }} {{ item.surname }}
+                    </li>
                   </v-col>
 
-                  <v-col class="grey--text text-truncate hidden-sm-and-down">
+                  <v-col
+                    v-if="data.score"
+                    class="grey--text text-truncate hidden-sm-and-down"
+                  >
                     &mdash;
-                    {{ info }}
+                    {{ solvedInfo }}
+                  </v-col>
+                  <v-col
+                    v-if="!data.score"
+                    class="grey--text text-truncate hidden-sm-and-down"
+                  >
+                    &mdash;
+                    {{ unsolvedInfo }}
                   </v-col>
                   <v-col class="text-no-wrap content-size" cols="5" sm="3">
                     <v-chip
@@ -38,7 +47,7 @@
                       bold
                       big
                     >
-                      {{ data.testPoint }}
+                      {{ data.score }}/100
                     </v-chip>
                   </v-col>
                 </v-row>
@@ -48,22 +57,19 @@
                 <v-divider></v-divider>
                 <v-card-text>
                   <div>
-                    <p>Doğum Tarihi: {{ data.birthdate }}</p>
-                    <p>Yaşadığı Şehir: {{ data.city }}</p>
-                    <p>Telefon No: {{ data.phone }}</p>
-                    <p>E posta adresi: {{ data.email }}</p>
-                    <p>Okuduğu Üniversite: {{ data.university }}</p>
-                    <p>Bölüm: {{ data.faculty }}</p>
-                    <p>Hakkında: {{ data.about }}</p>
-                    <v-btn
-                      @click="finishTest"
-                      type="submit"
-                      color="#02c3bd"
-                      dark
-                      large
-                    >
-                      Özgeçmiş İndir</v-btn
-                    >
+                    <li v-for="item in data.usersprofile" :key="item">
+                      <p><u>Doğum Tarihi:</u> {{ item.birthdate }}</p>
+                      <p><u>Yaşadığı Şehir:</u> {{ item.city }}</p>
+                      <p><u>Telefon No:</u> {{ item.phone }}</p>
+                      <p><u>E posta adresi:</u> {{ item.email }}</p>
+                      <p>
+                        <u> Okuduğu Üniversite:</u>
+                        {{ item.university }}
+                      </p>
+                      <p><u>Bölüm:</u> {{ item.faculty }}</p>
+                      <p><u>Hakkında:</u> {{ item.about }}</p>
+                      <v-btn color="#02c3bd" dark large> Özgeçmiş İndir</v-btn>
+                    </li>
                   </div>
                 </v-card-text>
               </v-expansion-panel-content>
@@ -79,9 +85,7 @@
 <script>
 import Footer from "../components/Footer.vue";
 import Navbar from "../components/Navbar.vue";
-
 import endpoint from "@/lib/api";
-
 export default {
   components: {
     appFooter: Footer,
@@ -90,11 +94,10 @@ export default {
   data: () => {
     return {
       applicantsList: [],
-      avatar: "https://avatars0.githubusercontent.com/u/9064066?v=4&s=460",
-      info: "Sınav çözüldü....",
+      solvedInfo: "Sınav çözüldü....",
+      unsolvedInfo: "Sınav çözülmedi....",
     };
   },
-
   created() {
     this.loadApplicants();
   },
@@ -103,11 +106,10 @@ export default {
       this.$axios
         .get(endpoint.auth.companyApplicants)
         .then((response) => {
-          console.log(response);
-          this.data = response.data;
-          console.log(this.data);
-          for (let key in this.data) {
-            this.applicantsList.push({ ...this.data[key], id: key });
+          let data = response.data;
+          console.log(data);
+          for (let key in data) {
+            this.applicantsList.push({ ...data[key], id: key });
             console.log(key);
           }
         })
@@ -122,7 +124,6 @@ export default {
   font-size: 20px;
 }
 p {
-  font-size: 17px;
-  font-weight: size;
+  font-size: 18px;
 }
 </style>
