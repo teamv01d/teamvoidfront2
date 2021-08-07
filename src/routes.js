@@ -1,11 +1,12 @@
+
 import IndividualLogin from './views/IndividualLogin.vue'
 import Profile from './views/Profile'
 import CompanyProfile from './views/CompanyProfile'
 import AddAdvertisemnt from './views/AddAdvertisemnt'
 import Application from './views/Application'
 import AboutUs from './views/AboutUs'
-
-
+import CompanyLogin from './views/CompanyLogin.vue'
+import TestSolve from './views/TestSolve.vue'
 
 export const routes = [
     {
@@ -19,7 +20,7 @@ export const routes = [
         component: Profile
       },
       {
-        path:'/company',
+        path:'/company/profile',
         name:'company',
         component: CompanyProfile
       },
@@ -38,10 +39,14 @@ export const routes = [
         name:'aboutus',
         component:AboutUs
       }
-     
-    
-
-     
-    
+        path: '/company',
+        name: 'CompanyLogin',
+        component: CompanyLogin
+    },
+    {
+        path: '/testSolve',
+        name: 'TestSolve',
+        component: TestSolve
+    },
 
 ]
