@@ -13,9 +13,14 @@
               <v-expansion-panel-header>
                 <v-row align="center" class="spacer" no-gutters>
                   <v-col cols="4" sm="2" md="1">
-                    <v-avatar size="52px">
+                    <v-avatar size="80">
                       <li v-for="item in data.usersprofile" :key="item">
-                        <img :src="item.photo" />
+                        <v-img
+                          :src="item.photo"
+                          alt="user"
+                          height="100%"
+                          width="100"
+                        />
                       </li>
                     </v-avatar>
                   </v-col>
@@ -28,14 +33,24 @@
 
                   <v-col
                     v-if="data.score"
-                    class="grey--text text-truncate hidden-sm-and-down"
+                    class="
+                      grey--text
+                      text-truncate
+                      hidden-sm-and-down
+                      content-size
+                    "
                   >
                     &mdash;
                     {{ solvedInfo }}
                   </v-col>
                   <v-col
                     v-if="!data.score"
-                    class="grey--text text-truncate hidden-sm-and-down"
+                    class="
+                      grey--text
+                      text-truncate
+                      hidden-sm-and-down
+                      content-size
+                    "
                   >
                     &mdash;
                     {{ unsolvedInfo }}
@@ -68,7 +83,7 @@
                       </p>
                       <p><u>Bölüm:</u> {{ item.faculty }}</p>
                       <p><u>Hakkında:</u> {{ item.about }}</p>
-                      <v-btn color="#02c3bd" dark large> Özgeçmiş İndir</v-btn>
+                      <v-btn color="#02c3bd" dark large> ÖZGEÇMİŞ İNDİR</v-btn>
                     </li>
                   </div>
                 </v-card-text>
@@ -94,8 +109,8 @@ export default {
   data: () => {
     return {
       applicantsList: [],
-      solvedInfo: "Sınav çözüldü....",
-      unsolvedInfo: "Sınav çözülmedi....",
+      solvedInfo: "Yetenek testi çözüldü....",
+      unsolvedInfo: "Yetenek testi çözülmedi....",
     };
   },
   created() {
