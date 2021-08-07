@@ -111,7 +111,7 @@ export default {
       selectedAnswer: "",
       terms: false,
       onboarding: 0,
-      counter: 0,
+      score: 0,
       data: [],
     };
   },
@@ -141,7 +141,7 @@ export default {
       let i = 0;
       for (i = 0; i < this.data.length; i++) {
         if (this.selectedAnswer == this.data[i].answer) {
-          this.counter++;
+          this.score++;
         }
       }
 
@@ -154,9 +154,9 @@ export default {
     },
     /*posts the user's number of correct answers*/
     postCount() {
-      const data = { count: this.counter };
+      const data = { count: this.score };
       this.$axios
-        .post(endpoint.auth.testSolve, data)
+        .post(endpoint.auth.postCount, data)
         .then((response) => {
           console.log(response);
         })
@@ -167,13 +167,13 @@ export default {
       let i = 0;
       for (i = 0; i < this.data.length; i++) {
         if (this.selectedAnswer == this.data[i].answer) {
-          this.counter++;
+          this.score++;
         }
       }
       alert("Sınavınız bitmiştir.");
+      this.postCount();
       this.$router.push("/company");
-      console.log(this.counter);
-      //this.postCount();
+      console.log(this.score);
     },
   },
   computed: {
