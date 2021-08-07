@@ -50,6 +50,7 @@
                         class="rounded-0"
                       />
                       <v-btn
+                        @click="signin"
                         type="submit"
                         class="rounded-0"
                         color="#02c3bd"
@@ -201,8 +202,7 @@ export default {
       this.$axios
         .post(endpoint.auth.login, data)
         .then((response) => {
-          console.log(response);
-          localStorage.setItem("token", response.data);
+          localStorage.setItem("token", response.data.access_token);
           this.submitted = "true";
           this.$router.push("/company");
         })
@@ -211,7 +211,10 @@ export default {
 
     onSubmit() {
       this.$axios
-        .post(endpoint.auth.register, this.user)
+        .post(endpoint.auth.register, {
+          ...this.user,
+          token: localStorage.getItem("token"),
+        })
         .then((response) => {
           console.log(response);
           this.user = {};

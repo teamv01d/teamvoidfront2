@@ -7,5 +7,4 @@ const axiosInstance = axios.create({
 });
 axiosInstance.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
-axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('token');
 Vue.prototype.$axios = axiosInstance;
