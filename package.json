@@ -13,10 +13,12 @@
     "vue": "^2.6.11",
     "vue-pdf": "^4.3.0",
     "vue-router": "^3.5.2",
-    "vuetify": "^2.4.0"
+    "vuetify": "^2.4.0",
+    "vuetify-image-input": "^19.2.2"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "@mdi/font": "^5.9.55",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",

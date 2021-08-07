@@ -1,20 +1,21 @@
 <template>
 
-    <div class="profile pb-16">
+    <div class="pb-16">
         <Navbar/>
         <h1 class="text-center mt-10"><span>PROFILIM</span></h1>
         <v-container class="mt-10">
             <v-layout row justify-space-around class="mb-5"> 
-                <v-flex v-for="user in user" :key="user.name"> 
+                <v-flex > 
+                   
                    <v-responsive>
-                       <v-avatar size="150" class="grey lighten-2">
-                           <img :src="user.avatar" alt="">
+                       <v-avatar size="180" class="grey lighten-2">
+                            <img :src="rsm" alt="">
                        </v-avatar>
                    </v-responsive>
                 </v-flex>
                  <v-flex md8  > 
                      <div class="user-info mt-10">
-                         <h3 class="mb-3"> Ad-Soyad : {{postList.name}} {{postList.surname}}</h3>
+                         <h2 class="mb-3"> HOŞGELDİN  {{postList.name}} {{postList.surname}}! </h2>
                         
                      </div>
                   
@@ -22,34 +23,83 @@
 
             </v-layout>
            <hr>
-          
+         
            <v-layout row class="mt-10">
-            <v-flex md3>
-           
-            <h2 class="my-5">Bilgilerim</h2>
-            <h3> Doğum Tarihi : </h3> 
-            <h3> Şehir : </h3> 
-            <h3> Üniversite : </h3>
-            <h3> Bölüm : </h3>
-            <h3> Telefon Numarası :</h3>
-            <h3>Mail Adresi: </h3>
-             <h3> Hakkımda :</h3>
-            <h3>CV : </h3>
+            
+            <v-flex  v-for="p in postList" :key="p" xs8>
+                  <v-layout row>
+                 <h2 >BİLGİLERİM </h2>
+                   </v-layout>
+                <v-layout row>
+                  <v-flex xs4>
+                      <h3> &nbsp; Doğum Tarihi : </h3>
+                      </v-flex>
+                <v-flex xs8>
+                     <h3> &nbsp;{{p.birthdate}}</h3>
+                </v-flex>    
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs4>
+                       <h3>Şehir : </h3>
+                      </v-flex>
+                <v-flex xs8>
+                     <h3>{{p.city}} </h3>
+                </v-flex>    
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs4>
+                       <h3>Üniversite : </h3>
+                      </v-flex>
+                <v-flex xs8>
+                     <h3>{{p.university}} </h3>
+                </v-flex>    
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs4>
+                      <h3>Bölüm :</h3>
+                      </v-flex>
+                <v-flex xs8>
+                     <h3>{{p.faculty}}</h3>
+                </v-flex>    
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs4>
+                     <h3>Telefon Numarası:</h3> 
+                      </v-flex>
+                <v-flex xs8>
+                    <h3>{{p.phone}}</h3> 
+                </v-flex>    
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs4>
+                      <h3>Mail Adresi : </h3>
+                      </v-flex>
+                <v-flex xs8>
+                     <h3>{{p.email}} sds</h3>
+                </v-flex>    
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs5>
+                      <h3>Hakkımda :</h3>
+                      </v-flex>
+                <v-flex xs7>
+                    <h3>{{p.about}}</h3>
+                </v-flex>    
+                </v-layout>
+                <v-layout row>
+                  <v-flex xs4>
+                      <h3>CV: </h3>
+                      </v-flex>
+                <v-flex xs8>
+                     <h3>{{p.cv}} </h3>
+                </v-flex>    
+                </v-layout>
+
+            
            
             </v-flex>  
-            <v-flex md5>
-            <div v-for="postList in postList" :key="postList">
-            <h2 class="my-5"> - </h2>
-            <h3> {{postList.birthdate}}  </h3>
-            <h3> {{postList.city}} </h3> 
-            <h3> {{postList.university}} </h3>
-            <h3> {{postList.faculty}} </h3>
-            <h3> {{postList.phone}}</h3>
-            <h3>{{postList.email}}</h3>
-            <h3> {{postList.about}}</h3>
-            <h3>{{postList.selectedFile}} </h3>
-            </div>
-            </v-flex>
+           
+           
             <v-flex md4>
               <h2 class="my-5">Bilgileri Düzenle <v-icon right>edit</v-icon> </h2> 
                 <Popup1  />  <br> <br> 
@@ -60,7 +110,7 @@
          
 
         </v-container>
-         <Footer class="footer"  />
+         <Footer  />
     </div>
    
 </template>
@@ -77,20 +127,19 @@ export default {
     components:{
         Navbar,
         Popup1,
-       
-        Footer,
+        Footer
     },
    data() {
        return {
            chosenFile:null,
            postList:[
+              
+           ],
          
-           ],
-            user:[
-               { user:'nisanur celik',avatar:'/nisanurcelik.jpg'}
-           ],
-           previews: [],
-errorImage: "url of an image to use to indicate an error",
+        
+          rsm:'/us2.png',
+
+       
            
           
        }
@@ -98,14 +147,18 @@ errorImage: "url of an image to use to indicate an error",
     mounted(){
       
     // axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
-       this.$axios.get(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'))
+       this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
         .then(response => {
              let data = response.data;
+             console.log(data)
+             this.postList.push(data);
          
-          for(let key in data){
-            this.postList.push({ ...data[key], id : key })
-          }
-          console.log("deneme")
+        //   for(let key in data){
+        //     this.postList.push({ ...data[key], id : key })
+        //     console.log(key)
+        //   }
+          //console.log(this.postList)
+         this.rsm=this.postList.foto
         })
         
 
@@ -130,13 +183,6 @@ errorImage: "url of an image to use to indicate an error",
 h3{
     margin-top:20px;
 }
-.profile{
-    background-color:#EDE7F6;
 
-}
-.footer{    
-    margin-bottom:-100px;
-    margin-top:70px;
-}
 
 </style>                    

@@ -2,6 +2,7 @@ import IndividualLogin from './views/IndividualLogin.vue'
 import Profile from './views/Profile'
 import CompanyProfile from './views/CompanyProfile'
 import AddAdvertisemnt from './views/AddAdvertisemnt'
+import Application from './views/Application'
 
 
 export const routes = [
@@ -23,7 +24,14 @@ export const routes = [
       {
         path:'/advertisement',
         name:'advertisement',
-        component: AddAdvertisemnt
+        component: AddAdvertisemnt,
       },
+      {
+        path:'/application',
+        name:'application',
+        component:Application
+      }
+     
+    
 
 ]
