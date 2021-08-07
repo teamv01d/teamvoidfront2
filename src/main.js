@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import pdf from 'vue-pdf'
+import imageInput from 'vuetify-image-input';
 import vuetify from './plugins/vuetify' 
 import axios from  './plugins/axios'
 import Router from 'vue-router'
@@ -16,5 +18,7 @@ new Vue({
   vuetify,
   axios,
   router,
+  pdf,
+  imageInput,
   render: h => h(App)
 }).$mount('#app')

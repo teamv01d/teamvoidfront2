@@ -10,11 +10,11 @@
 
       <v-cart-text>
         <v-form class="mt-3 pa-3" ref="form">
-            <label for=""> 1) Doğum tarihini giriniz..</label>
-            <span></span>
-            <v-text-field placeholder="xx/xx/xxxx formatında giriniz.." label="Title" v-model="post.birthdate"  >
-              
-            </v-text-field>
+            <label for=""> 1) Doğum tarihinizi seçiniz.. <v-icon @click="dategor()">date_range</v-icon></label> <br>
+            <v-date-picker v-if="date"  v-model="post.birthdate" year-icon="date_range"  prev-icon="mdi-skip-previous"
+            next-icon="mdi-skip-next"  ></v-date-picker>
+         
+            <br>
              <label for=""> 2) Yaşadığınız şehri giriniz..</label>
             <v-text-field label="Title" v-model="post.city"  > </v-text-field>
             
@@ -32,14 +32,20 @@
               
             </v-text-field>
              <label for=""> 6)Kendinizi kısaca anlatınız..</label>
-            <v-textarea label="Title" v-model="post.about"  >
-              
-            </v-textarea>
+            <v-textarea label="Title" v-model="post.about"  >  </v-textarea>
+           
+            
               <label for=""> 7) CV ekleyiniz..</label>
-            <v-file-input v-model="post.cv" @change="onFileSelected" />
+            <input type="file" accept="application/pdf" id="file" ref="file" v-on:change="handleFileUpload()"/>
+            
+            <!-- <pdf :src="post.imageUrl">  </pdf> -->
+
+
             <v-btn right flat  dark class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
            
         </v-form>
+      
+       
         </v-cart-text>
      
       </v-card>
@@ -49,7 +55,11 @@
 <script>
 import endpoint from "@/lib/api";
 
+
 export default {
+  components:{
+ 
+  },
   data(){
     return{
       post:{ 
@@ -59,16 +69,19 @@ export default {
       faculty:'',
       phone:'',
       about:'',
-      cv:null
+      cv:null,
      
 
-    }
+    },
+    date:false
+
      
     }
   },
   methods:{
      
    submit(){
+        
         var formData = new FormData();
         formData.append("birthdate",this.post.birthdate);
         formData.append("city", this.post.city);
@@ -76,24 +89,34 @@ export default {
         formData.append("faculty", this.post.faculty);
         formData.append("phone", this.post.phone);
         formData.append("about", this.post.about);
-       // formData.append("cv", fileInputElement.files[0]);
+        formData.append('file', this.post.cv);
+     
 
 
       
         // this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
-          this.$axios.get(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'))
+        this.$axios.get(endpoint.auth.profile)
         .then(response => {
+
           console.log("basarili get")
          if(!response.data)
          {
-        this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
+        this.$axios.post(endpoint.auth.profile,{formData,
+        token:localStorage.getItem("token")
+        })
+       
        .then(response =>{
-         console.log(response,"basarili post")
+         
+         console.log(response.data)
+         
          this.post ={}
        })
          }
          else{
-           this.$axios.patch(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
+           this.$axios.patch(endpoint.auth.profile.replace,{
+             formData,
+             token:localStorage.getItem("token")
+           })
         .then(response =>{
         console.log(response,"basarili patch")
          this.post ={}
@@ -107,9 +130,19 @@ export default {
         
 
       },
+      handleFileUpload(){
+      const file = this.$refs.file.files[0];
+      this.post.cv = file
+      this.post.imageUrl = URL.createObjectURL(file)
+      console.log(this.post.imageUrl)
+      },
+   
+    dategor(){
+      this.date=!this.date
+    },
+   
+  },
 
-    
-  }
    
 }
 </script>
