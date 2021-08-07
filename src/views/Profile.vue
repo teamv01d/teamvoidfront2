@@ -122,7 +122,6 @@ import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer'
 import endpoint from "@/lib/api";
 
-// import axios from 'axios'
 export default {
     components:{
         Navbar,
@@ -146,7 +145,7 @@ export default {
    },
     mounted(){
       
-    // axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+  
        this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
         .then(response => {
              let data = response.data;

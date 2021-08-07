@@ -8,16 +8,16 @@
                 <div class="ilanekle pa-5 mb-10">
                   <h3>İlan Başlığını Giriniz.. </h3>
                  
-                   <v-text-field  required  label="Title" > </v-text-field>
+                   <v-text-field  v-model="advertisement_name" required  label="Title" > </v-text-field>
                   <h3>İlan Konusunu Giriniz.. </h3>
-                <v-textarea required >
-            
-                </v-textarea>
+                <v-textarea v-model="explanation" required > </v-textarea>
+                   
+                 <v-select  :items="cities"  v-model="city"   filled   label="İl Seçiniz"></v-select>
                 <h3 class="left" for="">İlan Bitiş Tarihini Seçiniz <v-icon @click="tarihgor">date_range</v-icon></h3> <br>
-           <v-date-picker required v-if="tarih" v-model="picker"></v-date-picker>
+           <v-date-picker required v-if="tarih" v-model="end_date"></v-date-picker>
                  </div>
                  <v-layout row>
-                      <h4 dark class="pa-4 butonlar mr-3 deep-purple darken-3" for=""> YETENEK TESTİ EKLE  </h4>
+                      <h4 dark class="pa-3 butonlar ml-3 mr-3 deep-purple darken-3" for=""> YETENEK TESTİ EKLE  </h4>
                       <v-switch @click="y_testisecenek"
                 color="indigo"   value="green"  hide-details >
             
@@ -27,7 +27,7 @@
               <br>
             <v-layout row >
            
-           <h4 v-if="veritabani" dark class="pa-2 mt-5 butonlar mr-3 deep-purple darken-3" for=""> Veritabanından Getir  </h4>
+           <h4 v-if="veritabani" dark class="pa-2 ml-3 mt-5 butonlar mr-3 deep-purple darken-3" for=""> Veritabanından Getir  </h4>
                 <v-switch v-if="veritabani" @click="secenekgoster"
                 color="indigo"   value="green"  hide-details >
             
@@ -63,11 +63,11 @@
        <v-flex xs6 offset-3>  
            <h2 class="mb-10 text-center"> {{konu}} SORULARI </h2>
         <div class="sorular" v-for="(sor,index) in v_sorular " :key="index" >
-            <h3 > {{index+1}}. {{sor.soru}}</h3>
-            <h3> A) {{sor.a}}  </h3>
-            <h3> B) {{sor.b}} </h3> 
-            <h3> C) {{sor.c}} </h3>
-            <h3> D) {{sor.d}} </h3>
+            <h3 > {{index+1}}. {{sor.question}}</h3>
+            <h3> A) {{sor.optiona}}  </h3>
+            <h3> B) {{sor.optionb}} </h3> 
+            <h3> C) {{sor.optionc}} </h3>
+            <h3> D) {{sor.optiond}} </h3>
              <v-btn class="btn-right error" @click="qdelete(sor)"> <v-icon>delete</v-icon></v-btn>
             <v-btn  :disabled="checkstatus(sor)"  class=" mr-3 btn-right success"   @click="ekle(sor)" > Seç </v-btn>
            
@@ -78,7 +78,7 @@
       
        </v-flex>
    </v-layout>
-    <v-layout v-if="psorular" row class="mt-10">
+    <!-- <v-layout v-if="psorular" row class="mt-10">
        <v-flex xs6 offset-3>  
            <h2 class="mb-10 text-center"> {{konu}} SORULARI </h2>
       <div>onizlemesoru</div>
@@ -87,7 +87,7 @@
       
       
        </v-flex>
-   </v-layout>
+   </v-layout> -->
 
            </div>
            
@@ -96,17 +96,18 @@
                  <v-flex class="testolustur" xs6 offset-3>  
                    <form action="">
             <label for=""> Sınav Konusunu Giriniz:</label> <v-text-field required v-model="sinavkonusu" > </v-text-field>
-            <!-- <label for=""> Soru Sayısını Giriniz:</label> <v-text-field  required  v-model="sorusayisi" type="number"> </v-text-field> -->
+          
            
            
 
-           <br> <v-btn dark class="deep-purple darken-3" type="submit" @click="testolustur" >Oluştur</v-btn>
+           <br> <v-btn :disabled="kontrol"  class="renk deep-purple darken-3" type="submit" @click="testolustur" >Oluştur</v-btn>
               
                 </form>
                 </v-flex>
               </v-layout>
             </div>
-            <v-btn v-if="btn1" @click="gor1"> Soru ekle</v-btn>
+            <v-btn  dark class="mb-15 btn-right deep-purple darken-3" v-if="btn1" @click="gor1"> Soru ekle</v-btn>
+            <div >
               <div v-if="testsorulari"    >
                 <v-layout>
                    <v-flex xs6 offset-3 class="testolustur mt-15"  >
@@ -116,11 +117,12 @@
               <label for=""> C Şıkkını Giriniz:</label><v-text-field  :value="oldText" @input="updateC"  > </v-text-field>
               <label for=""> D Şıkkını Giriniz:</label><v-text-field  :value="oldText" @input="updateD" > </v-text-field>
                 <v-select  :items="options"  :value="oldText" @input="updateS"   filled   label="Doğru Cevap Şıkkını Seçiniz"></v-select>                         
-              <v-btn class="btn-right" @click="remove">Kaldır</v-btn>
-              <v-btn class="btn-right mr-3" @click="approve()">Onayla</v-btn>
+              
+              <v-btn  dark class="deep-purple darken-3" @click="approve()">Onayla</v-btn>
                    </v-flex> 
 
                 </v-layout>
+               
                 
               <!-- <div  v-for="(i,index) in parseInt(sorusayisi)" :key="index">
              
@@ -145,10 +147,13 @@
             </v-layout> --> -->
           
             </div>
+             <Onizleme v-if="oniz" class="btn-right" :ques="onizlemesoru" /> 
+            </div>
+              
             <br> <br>
            <hr>
            <div class="mb-15 mt-5">
-                <v-btn type="submit" dark class=" btn-right deep-purple darken-3"> Oluştur </v-btn> 
+                <v-btn @click="ilanolustur" type="submit" dark class=" btn-right deep-purple darken-3"> Oluştur </v-btn> 
             </div>
               
              </form>  
@@ -173,6 +178,21 @@ export default {
     },
     data(){
        return{
+         advertisement_name:"",
+         explanation:"",
+         end_date:"",
+         cities:[
+           "Adana","Adıyaman", "Afyon", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
+            "Aydın", "Balıkesir","Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale",
+            "Çankırı", "Çorum","Denizli","Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum ", "Eskişehir",
+            "Gaziantep", "Giresun","Gümüşhane", "Hakkari", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir",
+            "Kars", "Kastamonu", "Kayseri","Kırklareli", "Kırşehir", "Kocaeli", "Konya", "Kütahya ", "Malatya",
+            "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya",
+            "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat", "Trabzon  ", "Tunceli", "Şanlıurfa", "Uşak",
+            "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt ", "Karaman", "Kırıkkale", "Batman", "Şırnak",
+            "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük ", "Kilis", "Osmaniye ", "Düzce"
+         ],
+         city:"",
          veritabani:false,
          yourself:false,
          veritabani_q:false,
@@ -182,7 +202,6 @@ export default {
          btn1:false,
          v_sorular:[],
          onizlemesoru:[],
-         onizlemesoru2:[],
          psorular:false,
          sorusayisi:null,
          sorusayisi2:'',
@@ -191,19 +210,20 @@ export default {
            "A","B","C","D"
          ],
          sinavkonusu:'',
-         puan:'',
+         
+        kontrol:false,
          responses:[],
        
          bla:{
-         content:"",
-         asik:"",
-         bsik:"",
-         csik:"",
-         dsik:"",
-         secilen:"",
+         question:"",
+         optipna:"",
+         optionb:"",
+         optionc:"",
+         optiond:"",
+         answer:"",
          
          },
-       
+        oniz:false,
          tarih:false
         
        }
@@ -228,16 +248,22 @@ export default {
         },
         sorularigor(){
          this.konu='JAVA',
-         this.veritabani_q=true,
-         this.psorular=false
+         this.veritabani_q=true
+         //this.psorular=false
          if(this.v_sorular==0){
            axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
           .then(response => {
+            console.log("basarili java")
           let data = response.data;
+          console.log(data)
             
           for(let key in data){
             this.v_sorular.push({ ...data[key], id : key })
+
           }
+          console.log(this.veritabani_q)
+          console.log(this.v_sorular)
+          
          
         })
           .catch(e =>console.log(e)) 
@@ -248,12 +274,12 @@ export default {
         },
 
       updateContent(value){
-      this.bla.content=value
+      this.bla.question=value
        
       }, 
       updateA(value){
       
-       this.bla.asik=value
+       this.bla.optiona=value
          },
         
    
@@ -263,27 +289,30 @@ export default {
     
      
       updateB(value){
-       this.bla.bsik=value
+       this.bla.optionb=value
         // this.bla.bsik=value;
         // console.log(this.bla.bsik)
       },
       updateC(value){
-       this.bla.csik=value
+       this.bla.optionc=value
         
       },
       updateD(value){
-         this.bla.dsik=value
+         this.bla.optiond=value
      
       },
       updateS(value){
-      this.bla.secilen=value
+      this.bla.answer=value
         
       },
 
         python(){
-          this.veritabani_q=false  
-          this.psorular=true
+         this.v_sorular=[]
+         this.onizlemesoru=0
+        this.veritabani_q=true 
+          //this.psorular=true
           this.konu='Python'
+          console.log("basarili python")
         },
     
         kendinolustur(){
@@ -292,6 +321,7 @@ export default {
             this.testsorulari=false
             this.konu_liste=false
             this.btn1=false
+            this.oniz=false
           },
         ekle(sor){
          this.onizlemesoru.push(sor);
@@ -299,7 +329,7 @@ export default {
         },
         checkstatus(sor){
           const nisa=this.onizlemesoru.filter((val)=>{
-            return sor.soru=== val.soru
+            return sor.question=== val.question
 
           })
           return nisa.length>0
@@ -322,8 +352,11 @@ export default {
         
             if(this.sinavkonusu){
               this.btn1=true
+              this.kontrol=true
+              this.oniz=true
               
             }
+            
             
          
           
@@ -345,22 +378,29 @@ export default {
           console.log(response)
         })
         },
-        approve(id){
-          this.responses[id].push(this.bla.content);
-            this.responses[id].push(this.bla.asik);
-              this.responses[id].push(this.bla.bsik);
-                this.responses[id].push(this.bla.csik);
-                  this.responses[id].push(this.bla.dsik);
-                    this.responses[id].push(this.bla.secilen);
+        approve(){
+          if(this.bla.question && this.bla.optiona && this.bla.optionb && this.bla.optionc && this.bla.optiond && this.bla.answer )
+        {  this.onizlemesoru.push(this.bla)
           alert("sorular eklendi");
-          console.log(this.responses)
+         
           this.testsorulari=false
           this.btn1=true
-       
+       }
+       else{
+         alert("Bilgileri eksiksiz giriniz!")
+       }
           
           
         },
-        remove(){
+        ilanolustur(){
+          if(this.end_date && this.explanation && this.advertisement_name &&this.city)
+          { // var date =new Date();
+          //let start_date = (date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear())
+           console.log(this.tarih)
+          }
+          else(
+            alert("Gerekli Bilgileri Giriniz.")
+          )
 
         }
        
@@ -371,7 +411,7 @@ export default {
 </script>
 <style scoped>
 .ilanekle{
-    border: 1px solid;
+     border:inset 2px ;
     border-radius: 5px;
     padding: 20px;
      box-shadow: 10px 10px grey;
@@ -400,6 +440,9 @@ export default {
 .butonlar{
   color:white;
   border-radius: 5px;
+}
+.renk{
+  color:white
 }
 
 </style>

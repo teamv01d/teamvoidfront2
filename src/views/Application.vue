@@ -2,7 +2,12 @@
     <div>
         <Navbar />
         <v-container class="mt-10 " >
-            <h1 class="text-center">Vizyoner Genç İlan Başvuru</h1>
+            <v-layout row>
+                <v-flex xs10>
+                     <h1 class="text-center">Vizyoner Genç İlan Başvuru</h1>
+                </v-flex>
+            </v-layout>
+           
             <v-responsive>
                        <v-avatar size="150" class=" mb-10 grey lighten-2">
                             <img :src="rsm" alt="">
@@ -16,7 +21,7 @@
                                 <h3>Ad-Soyad : </h3>
                             </v-flex>
                             <v-flex xs8 > 
-                                  <h3>Lorem ipsum dolor sit amet consectetur . </h3>
+                                  <h3>{{info.name}} {{info.surnama}} </h3>
                             </v-flex>
                                   
                             </v-layout> 
@@ -25,7 +30,7 @@
                                 <h3>Doğum Tarihi : </h3>
                             </v-flex>
                             <v-flex xs8 > 
-                                  <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                  <h3>{{info.birthdate}} </h3>
                             </v-flex>
                                   
                             </v-layout> 
@@ -34,7 +39,7 @@
                                 <h3>Şehir : </h3>
                             </v-flex>
                             <v-flex xs8 > 
-                                  <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                  <h3>{{info.city}} </h3>
                             </v-flex>
                                   
                             </v-layout> 
@@ -47,7 +52,7 @@
                                 <h3>Üniversite : </h3>
                             </v-flex>
                             <v-flex xs8 > 
-                                  <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                  <h3>{{info.university}}</h3>
                             </v-flex>
                                   
                             </v-layout> 
@@ -56,7 +61,7 @@
                                 <h3>Bölüm : </h3>
                             </v-flex>
                             <v-flex xs8 > 
-                                  <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. </h3>
+                                  <h3>{{info.faculty}} </h3>
                             </v-flex>
                                   
                             </v-layout> 
@@ -77,7 +82,7 @@
                                 <h3> Telefon Numarası: </h3>
                             </v-flex>
                              <v-flex xs8>
-                                 <h3>Lorem ipsum dolor sit amet.</h3>
+                                 <h3>{{info.phone}}</h3>
                             </v-flex>
 
                              </v-layout> 
@@ -86,7 +91,7 @@
                                 <h3> Mail Adresi: </h3>
                             </v-flex>
                              <v-flex xs8>
-                                 <h3>Lorem ipsum dolor sit amet.</h3>
+                                 <h3>{{info.email}}</h3>
                             </v-flex>
 
                              </v-layout> 
@@ -102,7 +107,7 @@
                                 <h3> CV : </h3>
                             </v-flex>
                             <v-flex xs8>
-                                <h3> Lorem, ipsum. </h3>
+                                <h3>{{info.cv}} </h3>
                             </v-flex>
                         </v-layout>
                         </v-flex>   
@@ -119,7 +124,7 @@
 
                                   </v-flex> 
                                   <v-flex  xs2>
-                                    <v-btn  dark class="btn1 deep-purple darken-4"> BAŞLA </v-btn>
+                                    <v-btn @click="start" dark class="btn1 deep-purple darken-4"> BAŞLA </v-btn>
                                   </v-flex> 
                                 </v-layout> 
                                 <h4 class="not"><v-icon>report</v-icon> Yetenek testine girdikten sonra başvurunuz tamamlanacaktır.</h4>  
@@ -136,6 +141,7 @@
 <script>
 import Footer from '../components/Footer.vue'
 import Navbar from'../components/Navbar.vue'
+import endpoint from "@/lib/api";
 export default {
     components:{
         Navbar,
@@ -144,7 +150,39 @@ export default {
     data(){
         return{
              rsm:'/us2.png',
+             info:[],
         }
+    },
+    methods:{
+        start(){
+                this.$axios.post(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
+        .then(response => {
+            console.log(response)
+        })
+        
+
+        .catch(e =>console.log(e));
+        }
+
+    },
+    created(){
+         this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
+        .then(response => {
+             let data = response.data;
+             console.log(data)
+             this.info.push(data);
+         
+         this.rsm=this.info.foto
+        })
+        
+
+        .catch(e =>console.log(e));
+
+    
+    
+
+    
+    
     }
 }
 </script>

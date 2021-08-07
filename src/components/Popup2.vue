@@ -33,7 +33,7 @@
 
 </template>
 <script>
-import axios from 'axios';
+import endpoint from "@/lib/api";
 export default {
   
     data(){
@@ -57,31 +57,29 @@ export default {
         formData.append("aboutus", this.post.aboutus);
         formData.append("foto", this.post.foto);
         
-         axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+           this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
         .then(response => {
+          console.log("basarili get")
          if(!response.data)
          {
-        axios.post("https://profile-67e3f-default-rtdb.firebaseio.com/posts/.json",{...this.post})
+        this.$axios.post(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'),formData)
        .then(response =>{
-         console.log(response)
+         console.log(response,"basarili post")
          this.post ={}
        })
          }
          else{
-            axios.put("https://profile-67e3f-default-rtdb.firebaseio.com/posts/-Mfq_smqrYFXTiZ1forZ/.json",{...this.post})
+           this.$axios.patch(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'),formData)
         .then(response =>{
-         console.log(response,"degistirildi")
+        console.log(response,"basarili patch")
          this.post ={}
        })
          }
          
         })
+      
      
-
-
-
-
-       .catch(e => console.log(e));
+       .catch(e => console.log(e))
         
 
       },
