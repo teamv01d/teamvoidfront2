@@ -5,24 +5,13 @@
         <img src="../assets/void-logo.png" alt="" />
 
         <v-row align="center" justify="center">
-          <v-col cols="4">
-            <p>V01D</p>
-            <div class="title display-10">
-              <h1>Genç yetenekler için açılan fırsat kapılarına ulaş</h1>
-            </div>
-          </v-col>
-          <v-col cols="6" offset="1" lg="4">
+          <v-col lg="4">
+            <h3>VO1D</h3>
             <v-card class="text-center mt-6" shaped elevation="10">
               <v-window v-model="step">
                 <v-window-item :value="1">
-                  <div class="text-right mt-4 pr-10">
-                    <v-icon color="#02c3bd" dense left>
-                      mdi-account-key
-                    </v-icon>
-                    <router-link to="/company">Kurumsal Giriş Yap</router-link>
-                  </div>
                   <h2 class="text-center darken-3--text text--lighten-2 mt-6">
-                    Bireysel Giriş
+                    Kurumsal Giriş
                   </h2>
                   <v-card-text class="pa-12">
                     <v-form @submit.prevent="signin">
@@ -59,9 +48,9 @@
                         dark
                         >GİRİŞ YAP</v-btn
                       >
+                      <br />
                     </v-form>
                     <div>
-                      <br />
                       <v-btn
                         color="#02c3bd"
                         outlined
@@ -73,10 +62,10 @@
                         <v-icon dense left> mdi-account-key </v-icon>Kayıt Ol
                       </v-btn>
                     </div>
-                    <div v-if="submitted" class="mt-4">
-                      <h3>Giriş başarılı.</h3>
-                    </div>
                   </v-card-text>
+                  <div v-if="submitted" class="mt-4">
+                    <h3>Giriş başarılı.</h3>
+                  </div>
                 </v-window-item>
                 <v-window-item :value="2">
                   <v-row>
@@ -97,7 +86,7 @@
                           <v-form @submit.prevent="onSubmit">
                             <v-text-field
                               v-model="user.name"
-                              label="İsim"
+                              label="Yetkili İsim"
                               name="Name"
                               prepend-inner-icon="person"
                               type="text"
@@ -107,9 +96,19 @@
                             />
                             <v-text-field
                               v-model="user.surname"
-                              label="Soyisim"
+                              label="Yetkili Soyisim"
                               name="SurName"
                               prepend-inner-icon="person"
+                              type="text"
+                              color="black lighten-3"
+                              outlined
+                              class="rounded-0"
+                            />
+                            <v-text-field
+                              v-model="user.company_name"
+                              label="Kurum İsim"
+                              name="CompanyName"
+                              prepend-inner-icon="mdi-home"
                               type="text"
                               color="black lighten-3"
                               outlined
@@ -180,38 +179,41 @@
 
 <script>
 import endpoint from "@/lib/api";
-
 export default {
   data: () => {
     return {
       user: {
         name: "",
         surname: "",
+        company_name: "",
         password: "",
         email: "",
       },
       step: 1,
       showPassword: false,
       submitted: false,
-      token: null,
     };
   },
   methods: {
     signin() {
-      const data = { email: this.user.email, password: this.user.password };
+      const data = {
+        email: this.user.email,
+        password: this.user.password,
+      };
       this.$axios
         .post(endpoint.auth.login, data)
         .then((response) => {
+          console.log(response);
           localStorage.setItem("token", response.data.access_token);
           this.submitted = "true";
-          this.$router.push("/company");
+          this.$router.push("/testSolve");
         })
         .catch((e) => console.log(e));
     },
 
     onSubmit() {
       this.$axios
-        .post(endpoint.auth.register, {
+        .post(endpoint.auth.companyRegister, {
           ...this.user,
           token: localStorage.getItem("token"),
         })
@@ -253,5 +255,12 @@ h1 {
 }
 h2 {
   font-size: 30px;
+}
+h3 {
+  text-align: center;
+  color: white;
+  font-family: "Mukta", sans-serif;
+  line-height: 60px;
+  font-size: 50px;
 }
 </style>

@@ -5,6 +5,7 @@ import axios from  './plugins/axios'
 import Router from 'vue-router'
 import { routes } from './routes'
 
+
 Vue.use(Router);
 Vue.config.productionTip = false
 const router = new Router({

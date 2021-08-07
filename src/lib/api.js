@@ -1,6 +1,7 @@
 export default {
     auth: {
-        register: "users",
-        profile: "users/{id}",
+        register: "users/register",
+        login: "auth/login",
+        companyRegister: "users/company/register"
     }
 }
