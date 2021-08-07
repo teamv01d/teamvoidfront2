@@ -2,6 +2,8 @@
 import IndividualLogin from './views/IndividualLogin.vue'
 import CompanyLogin from './views/CompanyLogin.vue'
 import TestSolve from './views/TestSolve.vue'
+import Ilanlar from "./views/Ilanlar.vue"
+import IlanDetail from "./views/IlanDetails.vue"
 export const routes = [
     {
         path: '/',
@@ -17,5 +19,21 @@ export const routes = [
         path: '/testSolve',
         name: 'TestSolve',
         component: TestSolve
+    },
+    {
+        path: "/ilanlar",
+        name: "Ilanlar",
+        component: Ilanlar,
+        meta: {
+            title: 'Ilanlar'
+        }
+    },
+    {
+        path: "/ilanlar/:id",
+        name: "IlanDetail",
+        component: IlanDetail,
+        meta: {
+            title: 'Ilan Detail'
+        }
     },
 ]
