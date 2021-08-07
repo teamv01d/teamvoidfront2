@@ -22,9 +22,9 @@
                         type="radio"
                         id="a"
                         name="section_a"
-                        :value="data.A"
+                        :value="data.optionA"
                       />
-                      <label for="html"> {{ data.A }}</label
+                      <label for="html"> {{ data.optionA }}</label
                       ><br />
                       <input
                         v-model="selectedAnswer"
@@ -32,9 +32,9 @@
                         type="radio"
                         id="b"
                         name="section_b"
-                        :value="data.B"
+                        :value="data.optionB"
                       />
-                      <label for="css"> {{ data.B }}</label
+                      <label for="css"> {{ data.optionB }}</label
                       ><br />
                       <input
                         v-model="selectedAnswer"
@@ -42,18 +42,18 @@
                         type="radio"
                         id="c"
                         name="section_c"
-                        :value="data.C"
+                        :value="data.optionC"
                       />
-                      <label for="css"> {{ data.C }}</label
+                      <label for="css"> {{ data.optionC }}</label
                       ><br />
                       <input
                         v-model="selectedAnswer"
                         type="radio"
                         id="d"
                         name="section_d"
-                        :value="data.D"
+                        :value="data.optionD"
                       />
-                      <label for="css"> {{ data.D }}</label
+                      <label for="css"> {{ data.optionD }}</label
                       ><br />
                     </div>
                   </div>
@@ -155,9 +155,12 @@ export default {
 
     /*posts the user's number of correct answers*/
     postCount() {
-      const data = { count: this.score };
+      const scorePoint = { count: this.score };
       this.$axios
-        .post(endpoint.auth.postCount, data)
+        .post(endpoint.auth.postCount, {
+          scorePoint,
+          token: localStorage.getItem("token"),
+        })
         .then((response) => {
           console.log(response);
         })
