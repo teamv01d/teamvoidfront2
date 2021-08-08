@@ -1,7 +1,12 @@
 export default {
     auth: {
-        register: "users",
+        postCount: "applicant/create",
+        profile: "users/profile",
+        photo: "users/photo",
+        register: "users/register",
+        login: "auth/login",
+        companyRegister: "users/company/register",
         testSolve: "advertisementquestion",
-        postCount: "applicant/create"
+        companyApplicants: "applicant/appusers"
     }
 }

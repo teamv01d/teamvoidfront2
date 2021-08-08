@@ -104,7 +104,6 @@
 <script>
 import endpoint from "@/lib/api";
 import BaseTimer from "./BaseTimer.vue";
-
 export default {
   components: {
     BaseTimer,
@@ -166,7 +165,6 @@ export default {
         })
         .catch((e) => console.log(e));
     },
-
     finishTest() {
       let i = 0;
       for (i = 0; i < this.data.length; i++) {
