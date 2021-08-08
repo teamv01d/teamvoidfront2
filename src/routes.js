@@ -55,9 +55,8 @@ export const routes = [
         redirect: '/'
     },
     {
-        path:'/AboutUs',
-        name:'AboutUs',
+        path: '/AboutUs',
+        name: 'AboutUs',
         component: AboutUs
-    }
-
+    },
 ]
