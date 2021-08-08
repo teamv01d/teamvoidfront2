@@ -7,6 +7,7 @@ import CompanyLogin from './views/CompanyLogin.vue'
 import TestSolve from './views/TestSolve.vue'
 import CompanyApplicants from './views/CompanyApplicants.vue'
 import IndividualApplicants from './views/IndividualApplicants.vue'
+import AboutUs from './views/AboutUs.vue'
 
 export const routes = [
     {
@@ -52,6 +53,11 @@ export const routes = [
     {
         path: '*',
         redirect: '/'
+    },
+    {
+        path:'/AboutUs',
+        name:'AboutUs',
+        component: AboutUs
     }
 
 ]
