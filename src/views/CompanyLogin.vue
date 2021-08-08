@@ -14,9 +14,9 @@
                     Kurumsal Giriş
                   </h2>
                   <v-card-text class="pa-12">
-                    <v-form>
+                    <v-form @submit.prevent="signin">
                       <v-text-field
-                        v-model="user.userName"
+                        v-model="user.email"
                         label="E-posta adresi"
                         name="Email"
                         prepend-inner-icon="email"
@@ -26,7 +26,7 @@
                         class="rounded-0"
                       />
                       <v-text-field
-                        v-model="user.userPassword"
+                        v-model="user.password"
                         id="password"
                         label="Şifre"
                         name="password"
@@ -38,12 +38,19 @@
                         outlined
                         class="rounded-0"
                       />
-                    </v-form>
-                    <div>
-                      <v-btn class="rounded-0" color="#02c3bd" large block dark
+                      <v-btn
+                        @click="signin"
+                        type="submit"
+                        class="rounded-0"
+                        color="#02c3bd"
+                        large
+                        block
+                        dark
                         >GİRİŞ YAP</v-btn
                       >
                       <br />
+                    </v-form>
+                    <div>
                       <v-btn
                         color="#02c3bd"
                         outlined
@@ -56,6 +63,9 @@
                       </v-btn>
                     </div>
                   </v-card-text>
+                  <div v-if="submitted" class="mt-4">
+                    <h3>Giriş başarılı.</h3>
+                  </div>
                 </v-window-item>
                 <v-window-item :value="2">
                   <v-row>
@@ -95,7 +105,7 @@
                               class="rounded-0"
                             />
                             <v-text-field
-                              v-model="user.name"
+                              v-model="user.company_name"
                               label="Kurum İsim"
                               name="CompanyName"
                               prepend-inner-icon="mdi-home"
@@ -175,6 +185,7 @@ export default {
       user: {
         name: "",
         surname: "",
+        company_name: "",
         password: "",
         email: "",
       },
@@ -184,9 +195,28 @@ export default {
     };
   },
   methods: {
+    signin() {
+      const data = {
+        email: this.user.email,
+        password: this.user.password,
+      };
+      this.$axios
+        .post(endpoint.auth.login, data)
+        .then((response) => {
+          console.log(response);
+          localStorage.setItem("token", response.data.access_token);
+          this.submitted = "true";
+          this.$router.push("/testSolve");
+        })
+        .catch((e) => console.log(e));
+    },
+
     onSubmit() {
       this.$axios
-        .post(endpoint.auth.register, this.user)
+        .post(endpoint.auth.companyRegister, {
+          ...this.user,
+          token: localStorage.getItem("token"),
+        })
         .then((response) => {
           console.log(response);
           this.user = {};

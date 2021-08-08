@@ -2,36 +2,31 @@
     <nav>
        
        <v-toolbar class="renk" app height="90" >
-         
-
+           <v-toolbar-title  class="font-weight-bold white--text ml-3">
              
-               <v-toolbar-title  class="font-weight-bold white--text ml-3">
-             
-             <img  class="mr-2 mt-3" height="50px" :src="avatar" alt="" />
+            <img  class="mr-2 mt-5" height="50px" :src="avatar" alt="" />
              <p class="ml-1">V01D</p>
-             
-             
-
+         
            </v-toolbar-title>
-          
-        
-           
-           <!-- <v-spacer></v-spacer> -->
-        
-             <v-spacer></v-spacer>
-            <router-link to="/profile" tag="v-btn">
-            <v-btn color="white" class="mr-2 white" flat value="profile" >
+           <v-spacer></v-spacer>
+            <router-link to="/company" tag="v-btn">
+            <v-btn color="white" class="mr-2 white" flat value="company" >
            <span>Profil</span>  <v-icon right >person</v-icon>
            </v-btn>
           </router-link>
-          <router-link to="/ilanlar" tag="v-btn">
+          <router-link to="/advertisement" tag="v-btn">
             <v-btn color="white" class="mr-2 white" flat value="profile" >
-           <span > İlanlar</span>  <v-icon right>library_books</v-icon> 
+           <span > İlan Ekle</span>  <v-icon right>add</v-icon> 
            </v-btn>
           </router-link>
-          <router-link to="/basvurularim" tag="v-btn">
+          <router-link to="/ilanlarim" tag="v-btn">
             <v-btn color="white" class="mr-2 white" flat value="profile" >
-           <span >Başvurularım</span> <v-icon right>call_made</v-icon> 
+           <span > İlanlarım</span>  <v-icon right>library_books</v-icon> 
+           </v-btn>
+          </router-link>
+          <router-link to="/basvurular" tag="v-btn">
+            <v-btn color="white" class="mr-2 white" flat value="profile" >
+           <span >Başvurular</span> <v-icon right>call_made</v-icon> 
            </v-btn>
           </router-link>
            <router-link to="/logout" tag="v-btn">
@@ -39,7 +34,12 @@
            <span >Çıkış</span> <v-icon right>logout</v-icon> 
            </v-btn>
           </router-link>
+        
+          
+       
          
+         
+        
        </v-toolbar>
     </nav>
 </template>
