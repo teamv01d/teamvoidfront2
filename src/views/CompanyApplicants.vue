@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-navbar />
+    <app-company-navbar />
     <div class="ma-8 mr-16 ml-16">
       <v-container fluid>
         <v-row justify="center">
@@ -99,12 +99,12 @@
 
 <script>
 import Footer from "../components/Footer.vue";
-import Navbar from "../components/Navbar.vue";
 import endpoint from "@/lib/api";
+import CompanyNavbar from "../components/CompanyNavbar.vue";
 export default {
   components: {
     appFooter: Footer,
-    appNavbar: Navbar,
+    appCompanyNavbar: CompanyNavbar,
   },
   data: () => {
     return {

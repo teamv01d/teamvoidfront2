@@ -25,7 +25,13 @@
         </v-btn>
       </router-link>
       <router-link to="/logout" tag="v-btn">
-        <v-btn color="white" class="mr-2 white" flat value="profile">
+        <v-btn
+          @click="clearToken()"
+          color="white"
+          class="mr-2 white"
+          flat
+          value="profile"
+        >
           <span>Çıkış</span> <v-icon right>logout</v-icon>
         </v-btn>
       </router-link>
@@ -38,6 +44,13 @@ export default {
     return {
       avatar: "/mylogo.png",
     };
+  },
+  methods: {
+    clearToken() {
+      localStorage.clear();
+      localStorage.removeItem("token");
+      delete this.$axios.defaults.headers.common["Authorization"];
+    },
   },
 };
 </script>

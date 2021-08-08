@@ -39,6 +39,7 @@
                         class="rounded-0"
                       />
                       <v-btn
+                        @click="signin"
                         type="submit"
                         class="rounded-0"
                         color="#02c3bd"
@@ -202,17 +203,13 @@ export default {
       this.$axios
         .post(endpoint.auth.login, data)
         .then((response) => {
-          console.log(response);
           localStorage.setItem("token", response.data.access_token);
+          this.$axios.defaults.headers.common["Authorization"] =
+            "Bearer " + response.data.access_token;
           this.submitted = "true";
-          this.$router.push("/testSolve");
+          this.$router.push("/company/profile");
         })
         .catch((e) => console.log(e));
-
-      if (this.submitted == false) {
-        alert("E posta veya şifre yanlış.");
-        this.user = "";
-      }
     },
 
     onSubmit() {
