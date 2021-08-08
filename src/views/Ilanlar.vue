@@ -3,7 +3,7 @@
  <Navbar />
  <div class="BigContainer">
  <v-row>
-    <v-col v-for="ilan in items" :key="ilan.id" 
+    <v-col v-for="ilan in companies" :key="ilan.id" 
     :ilan="ilan"
     cols="12"
     sm="4"
@@ -37,6 +37,8 @@ import Ilan from "./Ilan.vue";
 import items from "../views/data/items"
 import Navbar from "./Navbar.vue"
 import Footer from "./Footer.vue"
+import endpoint from "../lib/api";
+
 export default {
     props:["ilan"], 
     items:items,
@@ -48,8 +50,22 @@ export default {
     },
     data(){
         return{
-            items:items
+            items:items,
+            companies: []
         }
+    },
+    methods: {
+      getAll() {
+        this.$axios
+          .get(endpoint.company.get)
+          .then((response) => {
+            this.companies = response.data;
+          })
+          .catch((e) => console.log(e));
+      },
+    },
+    beforeMount() {
+      this.getAll()
     }
 }
 </script>

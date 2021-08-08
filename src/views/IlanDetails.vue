@@ -174,9 +174,10 @@
 </template>
 
 <script>
-import items from "./data/items";
 import Navbar from "./Navbar.vue"
 import Footer from "./Footer.vue"
+import endpoint from '../lib/api'
+
 export default {
     components:{
         Navbar,
@@ -184,16 +185,26 @@ export default {
     },
     data() {
         return {
-            itemId: this.$route.params.id,
+            itemId: Number(this.$route.params.id),
             currentItem: null
         }
     },
+    methods: {
+        getCompany() {
+            this.$axios
+                .get(endpoint.company.getOne)
+                .then((response) => {
+                console.log(response);
+                this.currentItem = response.data;
+                })
+                .catch((e) => console.log(e));
+        }
+    },
     beforeMount() {
-        const id = Number(this.$route.params.id);
-        this.currentItem = items.find(function(item) {
-            return item.id === id
-        })
-        console.log(this.currentItem)
+        this.getCompany();
+        // this.currentItem = items.find(function(item) {
+        //     return item.id === id
+        // })
     }
 }
 </script>
