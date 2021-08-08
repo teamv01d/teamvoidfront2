@@ -22,9 +22,9 @@
                         type="radio"
                         id="a"
                         name="section_a"
-                        :value="data.A"
+                        :value="data.optionA"
                       />
-                      <label for="html"> {{ data.A }}</label
+                      <label for="html"> {{ data.optionA }}</label
                       ><br />
                       <input
                         v-model="selectedAnswer"
@@ -32,9 +32,9 @@
                         type="radio"
                         id="b"
                         name="section_b"
-                        :value="data.B"
+                        :value="data.optionB"
                       />
-                      <label for="css"> {{ data.B }}</label
+                      <label for="css"> {{ data.optionB }}</label
                       ><br />
                       <input
                         v-model="selectedAnswer"
@@ -42,18 +42,18 @@
                         type="radio"
                         id="c"
                         name="section_c"
-                        :value="data.C"
+                        :value="data.optionC"
                       />
-                      <label for="css"> {{ data.C }}</label
+                      <label for="css"> {{ data.optionC }}</label
                       ><br />
                       <input
                         v-model="selectedAnswer"
                         type="radio"
                         id="d"
                         name="section_d"
-                        :value="data.D"
+                        :value="data.optionD"
                       />
-                      <label for="css"> {{ data.D }}</label
+                      <label for="css"> {{ data.optionD }}</label
                       ><br />
                     </div>
                   </div>
@@ -73,7 +73,7 @@
             <v-card-actions class="justify-space-between">
               <v-item-group v-model="onboarding" class="text-center" mandatory>
               </v-item-group>
-              <v-btn @click="next" :disabled="clickable" v-model="terms">
+              <v-btn @click="next(data)" :disabled="clickable" v-model="terms">
                 <v-icon x-large>mdi-arrow-right-thick</v-icon>
               </v-btn>
             </v-card-actions>
@@ -85,8 +85,12 @@
           <v-container>
             <h3 class="mb-2">Cevaplar</h3>
             <v-layout wrap>
-              <v-flex v-for="data in questionList" :key="data">
-                <v-btn id="name" @click="next" class="question-box ma-2">
+              <v-flex v-for="(data, index) in questionList" :key="data">
+                <v-btn
+                  :color="data.solved ? '#02c3bd' : '#ffff'"
+                  class="question-box ma-2"
+                >
+                  {{ index + 1 }}
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -100,7 +104,6 @@
 <script>
 import endpoint from "@/lib/api";
 import BaseTimer from "./BaseTimer.vue";
-
 export default {
   components: {
     BaseTimer,
@@ -111,8 +114,9 @@ export default {
       selectedAnswer: "",
       terms: false,
       onboarding: 0,
-      counter: 0,
+      score: 0,
       data: [],
+      currentQuestion: 0,
     };
   },
   created() {
@@ -136,44 +140,41 @@ export default {
     },
     /* runs the forward button of the window, checks the correct answers and calculates number of correct answers.*/
     next() {
+      this.questionList[this.currentQuestion].solved = true;
+      this.currentQuestion++;
       this.onboarding =
         this.onboarding + 1 === this.length ? 0 : this.onboarding + 1;
       let i = 0;
       for (i = 0; i < this.data.length; i++) {
         if (this.selectedAnswer == this.data[i].answer) {
-          this.counter++;
+          this.score++;
         }
       }
-
-      // var buttonElements = document.getElementsByTagName("button");
-      // for (i = 0; i < buttonElements.length; i++) {
-      //   if (i == this.onboarding) {
-      //     buttonElements[i].style.background = "green";
-      //   }
-      // }
     },
     /*posts the user's number of correct answers*/
     postCount() {
-      const data = { count: this.counter };
+      const scorePoint = { count: this.score };
       this.$axios
-        .post(endpoint.auth.testSolve, data)
+        .post(endpoint.auth.postCount, {
+          scorePoint,
+          token: localStorage.getItem("token"),
+        })
         .then((response) => {
           console.log(response);
         })
         .catch((e) => console.log(e));
     },
-
     finishTest() {
       let i = 0;
       for (i = 0; i < this.data.length; i++) {
         if (this.selectedAnswer == this.data[i].answer) {
-          this.counter++;
+          this.score++;
         }
       }
       alert("Sınavınız bitmiştir.");
+      this.postCount();
       this.$router.push("/company");
-      console.log(this.counter);
-      //this.postCount();
+      console.log(this.score);
     },
   },
   computed: {
