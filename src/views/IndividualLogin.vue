@@ -204,7 +204,7 @@ export default {
         .then((response) => {
           localStorage.setItem("token", response.data.access_token);
           this.submitted = "true";
-          this.$router.push("/company");
+          this.$router.push("/profile");
         })
         .catch((e) => console.log(e));
     },
