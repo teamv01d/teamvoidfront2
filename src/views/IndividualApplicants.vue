@@ -1,12 +1,25 @@
 <template>
   <div>
     <app-navbar />
-
+    <div>
+      <h1 class="header-content">BAŞVURULARIM</h1>
+    </div>
     <div class="ma-12 ml-16 mr-16">
       <v-expansion-panels class="mb-6">
         <v-expansion-panel v-for="(item, i) in 5" :key="i">
           <v-expansion-panel-header disable-icon-rotate>
-            Item
+            <v-col cols="4" sm="2" md="1">
+              <v-avatar size="80">
+                <v-img
+                  src="../assets/void-logo.png"
+                  alt="user"
+                  height="100%"
+                  width="50"
+                />
+              </v-avatar>
+            </v-col>
+            <v-col class="ml-4 size-content"> İlan Adı </v-col>
+
             <template v-slot:actions>
               <v-icon color="green"> mdi-check </v-icon>
             </template>
@@ -35,50 +48,21 @@ export default {
     appNavbar: Navbar,
   },
   data() {
-    return {
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-        },
-        {
-          name: "Donut",
-          calories: 452,
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-        },
-      ],
-    };
+    return {};
   },
 };
 </script>
+
+<style scoped>
+.header-content {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 28px;
+}
+.v-expansion-panel {
+  max-width: 1000px;
+}
+.size-content {
+  font-size: 18px;
+}
+</style>

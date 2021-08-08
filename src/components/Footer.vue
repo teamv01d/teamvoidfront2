@@ -1,22 +1,13 @@
 <template>
-  <v-footer
-    dark
-     bottom 
-      padless
-      app
-  >
-    <v-card
-      class="flex"
-      flat
-      tile
-    >
-      <v-card-title class="deep-purple darken-4 ">
-        <strong >Genç yetenekler için açılan fırsat kapılarına ulaş!</strong>
+  <v-footer dark bottom fixed padless app>
+    <v-card class="flex" flat tile>
+      <v-card-title class="deep-purple darken-4">
+        <strong>Genç yetenekler için açılan fırsat kapılarına ulaş!</strong>
         <v-spacer></v-spacer>
-       <router-link color="white" to="/hakkimizda">
-       <span color="wihite"> HAKKIMIZDA </span> <v-icon> keyboard_arrow_right</v-icon> 
+        <router-link color="white" to="/hakkimizda">
+          <span color="wihite"> HAKKIMIZDA </span>
+          <v-icon> keyboard_arrow_right</v-icon>
         </router-link>
-      
       </v-card-title>
 
       <v-card-text class="py-2 white--text text-center">
@@ -26,19 +17,14 @@
   </v-footer>
 </template>
 <script>
-
-
-
 </script>
 <style scoped>
-span{
-    color:white;
-}
-a{
-  text-decoration:none;
+span {
   color: white;
-  border-bottom :1px solid white;
 }
-
-
+a {
+  text-decoration: none;
+  color: white;
+  border-bottom: 1px solid white;
+}
 </style>
