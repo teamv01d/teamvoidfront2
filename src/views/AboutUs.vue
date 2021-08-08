@@ -1,12 +1,9 @@
 <template>
   <div>
     <app-navbar />
-     <v-parallax
-height="900"
-src="/public/background1.jpg"
->
+    <v-parallax height="900" src="background1.jpg">
       <Team />
-      </v-parallax>
+    </v-parallax>
     <app-footer />
   </div>
 </template>
