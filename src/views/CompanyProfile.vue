@@ -9,18 +9,20 @@
          <v-responsive>
                        <v-avatar size="150" class="grey lighten-2">
                             <img :src="rsm" alt="">
-                       </v-avatar>
+                       </v-avatar> <br> <br>
+                       <Popup5 />
                      </v-responsive>
-                     <hr> <br>
+                     <br> <hr> <br>
             <v-layout>
                <v-spacer></v-spacer>  <Popup /> 
             </v-layout>
+               <div v-for="c in postList" :key="c">
                 <v-layout row class="mt-10">
                   <v-flex xs4>
                       <h3> Kurum Adı : </h3>
                   </v-flex>
                     <v-flex xs8>
-                        <h3>{{postList.name}} </h3>
+                        <h3>{{c.name}} </h3>
                   </v-flex>
               </v-layout>
               <v-layout row class="mt-10">
@@ -28,7 +30,23 @@
                       <h3> Web Adresi : </h3>
                   </v-flex>
                     <v-flex xs8>
-                        <h3>{{postList.web}}</h3>
+                        <h3>{{c.web}}</h3>
+                  </v-flex>
+              </v-layout>
+                <v-layout row class="mt-10">
+                  <v-flex xs4>
+                      <h3> Şehir : </h3>
+                  </v-flex>
+                    <v-flex xs8>
+                        <h3>{{c.city}}</h3>
+                  </v-flex>
+              </v-layout>
+                <v-layout row class="mt-10">
+                  <v-flex xs4>
+                      <h3> Telefon Numarası : </h3>
+                  </v-flex>
+                    <v-flex xs8>
+                        <h3>{{c.phone}}</h3>
                   </v-flex>
               </v-layout>
               <v-layout row class="mt-10 mb-15">
@@ -36,12 +54,13 @@
                       <h3> E-mail : </h3>
                   </v-flex>
                     <v-flex xs8>
-                        <h3> {{postList.email}} </h3>
+                        <h3> {{c.email}} </h3>
                   </v-flex>
               </v-layout>
+               </div>
               <div class="mt-15 mb-15">
                  <h2 class="text-center">Hakkımızda </h2> 
-                 <h3 class="text-center">{{postList.about}}</h3>
+                 <h3 class="text-center">{{postList[0].about}}</h3>
               </div>
                
           
@@ -61,14 +80,17 @@
 <script>
 import CompanyNavbar from '../components/CompanyNavbar.vue'
 import Popup from '../components/Popup2.vue'
+import Popup5 from '../components/Popup5.vue'
 import Footer from '../components/Footer.vue'
-// import axios from 'axios'
+import endpoint from "@/lib/api";
+
 
 export default {
    
    components:{
        CompanyNavbar,
        Popup,
+       Popup5,
        Footer :Footer,
    },
    data(){
@@ -81,16 +103,18 @@ export default {
    },
    mounted(){
       
-        // axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
-        // .then(response => {
-        //      let data = response.data;
-            
+       this.$axios.get(endpoint.auth.company)
+        .then(response => {
+             let data = response.data;
+             console.log(data)
+             this.postList.push(data);
+       
+         this.rsm=this.postList[0].photo
          
-        //   for(let key in data){
-        //     this.postList.push({ ...data[key], id : key })
-        //   }
-        // })
-        // .catch(e =>console.log(e)) 
+        })
+        
+
+        .catch(e =>console.log(e));
     }
 
    

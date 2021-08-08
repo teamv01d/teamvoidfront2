@@ -19,8 +19,7 @@
              <label for="">3) Hakkımızda bölümünü giriniz..</label>
              <v-textarea v-model="post.aboutus">
              </v-textarea>
-              <label for=""> 4) Fotoğraf ekleyiniz..</label>
-            <input type="file" accept="image/*"  @change="uploadImage()" />
+             
            
             <v-btn right dark flat class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
            
@@ -42,8 +41,10 @@ export default {
              kurum:'',
              web:'',
              aboutus:'',
-             imageUrl:null,
-             foto:null,
+             city:'',
+             phone:'',
+             
+            
 
            },
 
@@ -54,22 +55,25 @@ export default {
         var formData = new FormData();
         formData.append("kurum",this.post.kurum);
         formData.append("web", this.post.web);
+        formData.append("city", this.post.city);
+        formData.append("phone", this.post.phone);
         formData.append("aboutus", this.post.aboutus);
-        formData.append("foto", this.post.foto);
         
-           this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
+        
+           this.$axios.get(endpoint.auth.profile
+           )
         .then(response => {
           console.log("basarili get")
          if(!response.data)
          {
-        this.$axios.post(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'),formData)
+        this.$axios.post(endpoint.auth.profile,formData)
        .then(response =>{
          console.log(response,"basarili post")
          this.post ={}
        })
          }
          else{
-           this.$axios.patch(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'),formData)
+           this.$axios.patch(endpoint.auth.profile,formData)
         .then(response =>{
         console.log(response,"basarili patch")
          this.post ={}
@@ -83,11 +87,7 @@ export default {
         
 
       },
-      onChange(e) {
-      const file1 = e.target.files[0]
-      this.post.foto = file1
-      this.post.imageUrl = URL.createObjectURL(file1)
-    }
+      
     }
 }
 </script>

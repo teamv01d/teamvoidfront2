@@ -69,7 +69,7 @@ export default {
       faculty:'',
       phone:'',
       about:'',
-      cv:null,
+     
      
 
     },
@@ -85,57 +85,40 @@ export default {
         var formData = new FormData();
         formData.append("birthdate",this.post.birthdate);
         formData.append("city", this.post.city);
-        formData.append(" university", this.post. university);
+        formData.append("university", this.post.university);
         formData.append("faculty", this.post.faculty);
         formData.append("phone", this.post.phone);
         formData.append("about", this.post.about);
-        formData.append('file', this.post.cv);
+        
      
-
+        
 
       
         // this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
-        this.$axios.get(endpoint.auth.profile)
-        .then(response => {
-
-          console.log("basarili get")
-         if(!response.data)
-         {
-        this.$axios.post(endpoint.auth.profile,{formData,
-        token:localStorage.getItem("token")
-        })
        
-       .then(response =>{
-         
-         console.log(response.data)
-         
-         this.post ={}
-       })
-         }
-         else{
-           this.$axios.patch(endpoint.auth.profile.replace,{
-             formData,
-             token:localStorage.getItem("token")
-           })
+           this.$axios.patch(endpoint.auth.update,
+             formData
+           
+           )
         .then(response =>{
         console.log(response,"basarili patch")
+        console.log()
          this.post ={}
        })
-         }
          
-        })
+
       
      
        .catch(e => console.log(e))
         
 
       },
-      handleFileUpload(){
-      const file = this.$refs.file.files[0];
-      this.post.cv = file
-      this.post.imageUrl = URL.createObjectURL(file)
-      console.log(this.post.imageUrl)
-      },
+      // handleFileUpload(){
+      // const file = this.$refs.file.files[0];
+      // this.post.cv = file
+      // this.post.imageUrl = URL.createObjectURL(file)
+      // console.log(this.post.imageUrl)
+      // },
    
     dategor(){
       this.date=!this.date

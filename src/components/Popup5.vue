@@ -2,7 +2,7 @@
     <v-dialog class=""  v-model="dialog"  width="600">
         
       <template v-slot:activator="{ on }">
-           <v-btn  class="  deep-purple darken-3" dark v-on="on"> Fotoğraf Ekle &nbsp; <v-icon>photo_camera</v-icon> </v-btn>
+           <v-btn  class="  deep-purple darken-3" dark v-on="on"> Fotoğraf Ekle <v-icon>photo_camera</v-icon> </v-btn>
              </template>
           <v-card>
               <v-cart-text class="mt-15">
@@ -37,7 +37,7 @@ export default {
   },
   methods:{
     kaydet() {
-       var formData = new FormData();
+        var formData = new FormData();
         formData.append("photo",this.photo);
         // formData.append("cv", fileInputElement.files[0]);
 
@@ -46,9 +46,6 @@ export default {
        .then(response =>{
          console.log(response)
        })
-       
- 
-    
        
     //    this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
     //    .then(response =>{

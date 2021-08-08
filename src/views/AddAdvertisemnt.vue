@@ -64,10 +64,11 @@
            <h2 class="mb-10 text-center"> {{konu}} SORULARI </h2>
         <div class="sorular" v-for="(sor,index) in v_sorular " :key="index" >
             <h3 > {{index+1}}. {{sor.question}}</h3>
-            <h3> A) {{sor.optiona}}  </h3>
-            <h3> B) {{sor.optionb}} </h3> 
-            <h3> C) {{sor.optionc}} </h3>
-            <h3> D) {{sor.optiond}} </h3>
+            <h3> A) {{sor.optionA}}  </h3>
+            <h3> B) {{sor.optionB}} </h3> 
+            <h3> C) {{sor.optionC}} </h3>
+            <h3> D) {{sor.optionD}} </h3>
+            <h3> Cevap : {{sor.answer}} </h3>
              <v-btn class="btn-right error" @click="qdelete(sor)"> <v-icon>delete</v-icon></v-btn>
             <v-btn  :disabled="checkstatus(sor)"  class=" mr-3 btn-right success"   @click="ekle(sor)" > Seç </v-btn>
            
@@ -216,10 +217,10 @@ export default {
        
          bla:{
          question:"",
-         optipna:"",
-         optionb:"",
-         optionc:"",
-         optiond:"",
+         optionA:"",
+         optionB:"",
+         optionC:"",
+         optionD:"",
          answer:"",
          
          },
@@ -279,7 +280,7 @@ export default {
       }, 
       updateA(value){
       
-       this.bla.optiona=value
+       this.bla.optionA=value
          },
         
    
@@ -289,16 +290,16 @@ export default {
     
      
       updateB(value){
-       this.bla.optionb=value
+       this.bla.optionB=value
         // this.bla.bsik=value;
         // console.log(this.bla.bsik)
       },
       updateC(value){
-       this.bla.optionc=value
+       this.bla.optionC=value
         
       },
       updateD(value){
-         this.bla.optiond=value
+         this.bla.optionD=value
      
       },
       updateS(value){
@@ -383,7 +384,7 @@ export default {
         })
         },
         approve(){
-          if(this.bla.question && this.bla.optiona && this.bla.optionb && this.bla.optionc && this.bla.optiond && this.bla.answer )
+          if(this.bla.question && this.bla.optionA && this.bla.optionB && this.bla.optionC && this.bla.optionD && this.bla.answer )
         {  this.onizlemesoru.push({...this.bla})
           alert("sorular eklendi");
          
@@ -397,19 +398,44 @@ export default {
           
         },
         ilanolustur(){
-          if(this.end_date && this.explanation && this.advertisement_name &&this.city)
-          { // var date =new Date();
-          //let start_date = (date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear())
-           console.log(this.tarih)
-          }
-          else(
-            alert("Gerekli Bilgileri Giriniz.")
-          )
+          // if(this.end_date && this.explanation && this.advertisement_name &&this.city)
+          // { 
+          //   var zaman=new Date();
+          //   var zmn=zaman.getDay()+ '/'+ (zaman.getMonth()+1)+'/' +zaman.getFullYear();
+          //   var formData = new FormData();
+          //   formData.append("advertisement_name",this.advertisement_name);
+          //   formData.append("explanation",this.explanation);
+          //   formData.append("end_date",this.end_date);
+          //   formData.append("start_date",zmn);
+          //   formData.append("city",this.end_city);
 
+            
+
+      //   this.$axios.post(endpoint.auth.?,formData)
+      //  .then(response =>{
+
+      //  })
+       
+      // this.$axios.post(endpoint.auth.?,this.onizlemesoru)
+      //  .then(response =>{
+
+      //  })
+
+      //     }
+      //     else {
+      //       alert("Gerekli Bilgileri Giriniz.");
+      //       // var zaman=new Date();
+      //       // var zmn=zaman.getDay()+ '/'+ (zaman.getMonth()+1)+'/' +zaman.getFullYear();
+      //       // console.log(zmn)
+      //     }
+
+
+
+          }
         }
        
        
-    }
+    
     
 }
 </script>

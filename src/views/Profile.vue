@@ -2,7 +2,7 @@
 
     <div class="pb-16">
         <Navbar/>
-        <h1 class="text-center mt-10"><span>PROFILIM</span></h1>
+        <h1 class="text-center mt-10"><span>PROFİLİM</span></h1>
         <v-container class="mt-10">
             <v-layout row justify-space-around class="mb-5"> 
                 <v-flex > 
@@ -11,15 +11,16 @@
                        <v-avatar size="180" class="grey lighten-2">
                             <img :src="rsm" alt="">
                        </v-avatar>
-                      <br>
+                      <br> <br>
                          <Popup3 />
+                         
                    </v-responsive>
                 
                  
                 </v-flex>
                  <v-flex md8  > 
                      <div class="user-info mt-10">
-                         <h2 class="mb-3"> HOŞGELDİN  {{postList.name}} {{postList.surname}}! </h2>
+                         <h2 class="mb-3"> HOŞGELDİN  {{postList[0].name}} {{postList[0].surname}}! </h2>
                         
                      </div>
                   
@@ -36,10 +37,10 @@
                    </v-layout>
                 <v-layout row>
                   <v-flex xs4>
-                      <h3> &nbsp; Doğum Tarihi : </h3>
+                      <h3>Doğum Tarihi : </h3>
                       </v-flex>
                 <v-flex xs8>
-                     <h3> &nbsp;{{p.birthdate}}</h3>
+                     <h3>{{p.birthdate}}</h3>
                 </v-flex>    
                 </v-layout>
                 <v-layout row>
@@ -79,26 +80,31 @@
                       <h3>Mail Adresi : </h3>
                       </v-flex>
                 <v-flex xs8>
-                     <h3>{{p.email}} sds</h3>
-                </v-flex>    
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs5>
-                      <h3>Hakkımda :</h3>
-                      </v-flex>
-                <v-flex xs7>
-                    <h3>{{p.about}}</h3>
+                     <h3>{{p.email}} </h3>
                 </v-flex>    
                 </v-layout>
                 <v-layout row>
                   <v-flex xs4>
-                      <h3>CV: </h3>
+                      <h3>Hakkımda :</h3>
                       </v-flex>
                 <v-flex xs8>
-                     <h3>{{p.cv}} </h3>
+                    <h3> {{p.about}}</h3>
+                </v-flex>    
+                </v-layout> <br>
+                 <v-layout  row>
+                  <v-flex xs4>
+                      <h3>CV :</h3>
+                      </v-flex>
+                <v-flex  xs8>
+              <v-btn class="mt-5" @click="cvGor"> Cv Gor </v-btn> 
+              <img v-if="check1" :src="p.cv" alt="">
+    
+
                 </v-flex>    
                 </v-layout>
 
+                
+                    
             
            
             </v-flex>  
@@ -107,6 +113,7 @@
             <v-flex md4>
               <h2 class="my-5">Bilgileri Düzenle <v-icon right>edit</v-icon> </h2> 
                 <Popup1  />  <br> <br> 
+                <Popup4 />
              
             </v-flex>   
         
@@ -122,10 +129,13 @@
 
 import Popup1 from '../components/Popup1.vue'
 
+import Popup4 from '../components/Popup4.vue'
 import Popup3 from '../components/Popup3.vue'
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer'
 import endpoint from "@/lib/api";
+
+
 
 export default {
     components:{
@@ -133,6 +143,7 @@ export default {
         Popup1,
         Footer,
         Popup3,
+        Popup4,
       
     },
    data() {
@@ -141,9 +152,11 @@ export default {
            postList:[
               
            ],
+           check1:false,
         
         
           rsm:'/us2.png',
+         
         
        
            
@@ -151,8 +164,7 @@ export default {
        }
    },
     mounted(){
-      
-  
+    
        this.$axios.get(endpoint.auth.profile)
         .then(response => {
              let data = response.data;
@@ -160,6 +172,8 @@ export default {
              this.postList.push(data);
        
          this.rsm=this.postList[0].photo
+        //  this.cvUrl=this.postList[0].cvUrl
+         console.log(this.cvUrl)
         })
         
 
@@ -174,9 +188,11 @@ export default {
         gor(){
             console.log(this.chosenFile)
         },
-        deneme(){
-
+        cvGor(){
+            this.check1=!this.check1
         }
+
+       
        
     }
 
