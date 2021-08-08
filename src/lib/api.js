@@ -7,7 +7,11 @@ export default {
         cv:"users/cv",
         register: "users/register",
         login: "auth/login",
-        companyRegister: "users/company/register"
+        companyUpdate:"users/company",
+        companyRegister: "users/company/register",
+        advertisement:"advertisement/create",
+        testQuestion:"testquestion/create"
+
 
     }
 }

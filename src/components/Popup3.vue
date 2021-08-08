@@ -14,7 +14,9 @@
 
             
               /> -->
-               <input type="file" accept="image/png" @change=uploadImage>
+               <input type="file"  @change="upload($event)" id="file-input">
+
+               <img  :src="this.photo" />
               <v-btn dark class="deep-purple darken-3" @click="kaydet" >Kaydet</v-btn>
       </v-cart-text>   
           </v-card>
@@ -32,21 +34,23 @@ export default {
   },
   data(){
       return{
-        photo:""
+        photo:'',
+        image:'',
       }
      
   },
   methods:{
-    kaydet() {
-       var formData = new FormData();
-        formData.append("file","{/C:/Users/nisan/OneDrive/Masaüstü/logo.png}");
-        // formData.append("cv", fileInputElement.files[0]);
+    // kaydet() {
+      //  var formData = new FormData();
+      //  console.log(this.photo)
+      //   formData.append("file",this.photo);
+      //   // formData.append("cv", fileInputElement.files[0]);
 
-        this.$axios.post(endpoint.auth.photo,
-        formData)
-       .then(response =>{
-         console.log(response)
-       })
+      //   this.$axios.patch(endpoint.auth.update,
+      //   formData)
+      //  .then(response =>{
+      //    console.log(response)
+      //  })
        
  
     
@@ -58,21 +62,33 @@ export default {
          
       
     //    })
+          upload(event){
+    let data = new FormData();
+    let file = event.target.files[0];
+
+    data.append('name', 'my-file')
+    data.append('file', file)
+
+    let config = {
+      header : {
+       'Content-Type' : 'multipart/form-data'
+     }
+    }
+
+    this.$axios.post(endpoint.auth.photo, data, config).then(
+      response => {
+        console.log(response)
+      }
+    )
+  }
 
 
 
-
-    },
-    uploadImage(e){
-                const image = e.target.files[0];
-                const reader = new FileReader();
-                reader.readAsDataURL(image);
-                reader.onload = e =>{
-                    this.photo = e.target.result;
-                    
-                }
+ 
+ 
+     
     
   }
 }
-}
+
 </script>

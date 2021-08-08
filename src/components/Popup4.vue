@@ -8,13 +8,8 @@
               <v-cart-text class="mt-15">
             <h2 class="text-center mb-5">CV Ekleyiniz.</h2>
             <h4>Cv'nizi png fortmatında yükleyiniz ! </h4>
-               <imageInput v-model="file"
-              
-              uploadIcon='mdi-upload' 
+                  <input type="file"  @change="upload($event)" id="file-input">
 
-
-            
-              />
               <!-- <v-file-input v-model="cv"
     accept="image/*"
     label="File input"
@@ -29,14 +24,13 @@
 <script>
 // import imageInput from 'vuetify-image-input/a-la-carte'
 import endpoint from "@/lib/api";
-import imageInput from 'vuetify-image-input/a-la-carte'
+
 // import pdf from 'vue-pdf'
 
 export default {
   components:{
     
-     imageInput,
-    // pdf,
+  
   
   },
   data(){
@@ -47,33 +41,26 @@ export default {
      
   },
   methods:{
-    kaydet() {
-        var formData = new FormData();
-        formData.append("file",this.file);
-        // formData.append("cv", fileInputElement.files[0]);
+      upload(event){
+    let data = new FormData();
+    let file = event.target.files[0];
 
-        this.$axios.post(endpoint.auth.upload,
-        formData)
-       .then(response =>{
-         console.log(response)
-       })
-       
-       .catch(e => console.log(e))
- 
+    data.append('name', 'my-file')
+    data.append('file', file)
+
+    let config = {
+      header : {
+       'Content-Type' : 'multipart/form-data'
+     }
+    }
+
+    this.$axios.post(endpoint.auth.upload, data, config).then(
+      response => {
+        console.log(response)
+      }
+    )
+  }
   
-       
-    //    this.$axios.get(endpoint.auth.profile.replace('{id}','610ceb4ddf302b41e05e1b44'))
-    //    .then(response =>{
-    //      let photo1=response.data;
-    //      this.photo=photo1
-         
-      
-    //    })
-
-
-
-
-    },
     // handleFileUpload(){
     //   const file = this.$refs.file.files[0];
     //   this.file= file

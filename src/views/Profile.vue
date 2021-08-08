@@ -95,9 +95,10 @@
                   <v-flex xs4>
                       <h3>CV :</h3>
                       </v-flex>
-                <v-flex  xs8>
-              <v-btn class="mt-5" @click="cvGor"> Cv Gor </v-btn> 
-              <img v-if="check1" :src="p.cv" alt="">
+                 <v-flex  xs8>
+              <!-- <v-btn class="mt-5" @click="cvGor"> Cv Gor </v-btn>   -->
+              <!-- <img class="mt-5" height="200" :src="cvUrl" alt=""> -->
+             <h3><Cv  :cv="cvUrl" /></h3> 
     
 
                 </v-flex>    
@@ -133,6 +134,7 @@ import Popup4 from '../components/Popup4.vue'
 import Popup3 from '../components/Popup3.vue'
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer'
+import Cv from '../components/Cv'
 import endpoint from "@/lib/api";
 
 
@@ -144,6 +146,7 @@ export default {
         Footer,
         Popup3,
         Popup4,
+        Cv,
       
     },
    data() {
@@ -156,6 +159,7 @@ export default {
         
         
           rsm:'/us2.png',
+          cvUrl:''
          
         
        
@@ -172,6 +176,7 @@ export default {
              this.postList.push(data);
        
          this.rsm=this.postList[0].photo
+         this.cvUrl=this.postList[0].cvUrl
         //  this.cvUrl=this.postList[0].cvUrl
          console.log(this.cvUrl)
         })
@@ -188,9 +193,7 @@ export default {
         gor(){
             console.log(this.chosenFile)
         },
-        cvGor(){
-            this.check1=!this.check1
-        }
+       
 
        
        

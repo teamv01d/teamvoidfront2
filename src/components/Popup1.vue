@@ -42,6 +42,10 @@
 
 
             <v-btn right flat  dark class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
+            <v-alert v-if="alert"  dense   outlined  type="error"  >
+      
+              Lütfen tüm bilgileri giriniz !
+              </v-alert>
            
         </v-form>
       
@@ -69,10 +73,12 @@ export default {
       faculty:'',
       phone:'',
       about:'',
+
      
      
 
     },
+    alert:false,
     date:false
 
      
@@ -81,22 +87,16 @@ export default {
   methods:{
      
    submit(){
-        
-        var formData = new FormData();
+     if (this.post.birthdate && this.post.city && this.post.university &&this.post.faculty && this.post.phone &&this.post.about)
+         {
+            var formData = new FormData();
         formData.append("birthdate",this.post.birthdate);
         formData.append("city", this.post.city);
         formData.append("university", this.post.university);
         formData.append("faculty", this.post.faculty);
         formData.append("phone", this.post.phone);
         formData.append("about", this.post.about);
-        
-     
-        
-
-      
-        // this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
-       
-           this.$axios.patch(endpoint.auth.update,
+         this.$axios.patch(endpoint.auth.update,
              formData
            
            )
@@ -111,6 +111,19 @@ export default {
      
        .catch(e => console.log(e))
         
+         }
+         else{
+           this.alert=true
+         }
+       
+        
+     
+        
+
+      
+        // this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
+       
+          
 
       },
       // handleFileUpload(){

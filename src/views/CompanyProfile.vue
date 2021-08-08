@@ -22,7 +22,7 @@
                       <h3> Kurum Adı : </h3>
                   </v-flex>
                     <v-flex xs8>
-                        <h3>{{c.name}} </h3>
+                        <h3>{{c.company_name}} </h3>
                   </v-flex>
               </v-layout>
               <v-layout row class="mt-10">
@@ -30,7 +30,7 @@
                       <h3> Web Adresi : </h3>
                   </v-flex>
                     <v-flex xs8>
-                        <h3>{{c.web}}</h3>
+                        <h3>{{c.web_address}}</h3>
                   </v-flex>
               </v-layout>
                 <v-layout row class="mt-10">
@@ -58,9 +58,9 @@
                   </v-flex>
               </v-layout>
                </div>
-              <div class="mt-15 mb-15">
+              <div v-for="c in postList" :key="c" class="mt-15 mb-15">
                  <h2 class="text-center">Hakkımızda </h2> 
-                 <h3 class="text-center">{{postList[0].about}}</h3>
+                 <h3 class="text-center">{{c.about}}</h3>
               </div>
                
           
@@ -103,7 +103,7 @@ export default {
    },
    mounted(){
       
-       this.$axios.get(endpoint.auth.company)
+       this.$axios.get(endpoint.auth.profile)
         .then(response => {
              let data = response.data;
              console.log(data)
