@@ -7,7 +7,9 @@ export default {
         login: "auth/login",
         companyRegister: "users/company/register",
         testSolve: "advertisementquestion",
-        companyApplicants: "applicant/appusers"
+        companyApplicants: "applicant/appusers",
+        advertisement: "advertisement",
+        individualApplicants: "applicant/appusers",
     },
     advertisement: {
         get: "advertisement",
