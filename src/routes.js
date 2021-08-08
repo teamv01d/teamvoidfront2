@@ -1,6 +1,7 @@
 
 import IndividualLogin from './views/IndividualLogin.vue'
 import Profile from './views/Profile'
+import Application from './views/Application'
 import CompanyProfile from './views/CompanyProfile'
 import AddAdvertisemnt from './views/AddAdvertisemnt'
 import CompanyLogin from './views/CompanyLogin.vue'
@@ -53,6 +54,10 @@ export const routes = [
         component: TestSolve
     },
     {
+      path: '/application',
+      name: 'application',
+      component: Application
+    },
         path: '/companyApplicants',
         name: 'CompanyApplicants',
         component: CompanyApplicants

@@ -42,6 +42,10 @@
 
 
             <v-btn right flat  dark class="deep-purple darken-3"  @click="submit">Kaydet</v-btn>
+            <v-alert v-if="alert"  dense   outlined  type="error"  >
+      
+              Lütfen tüm bilgileri giriniz !
+              </v-alert>
            
         </v-form>
       
@@ -69,10 +73,12 @@ export default {
       faculty:'',
       phone:'',
       about:'',
-      cv:null,
+
+     
      
 
     },
+    alert:false,
     date:false
 
      
@@ -81,61 +87,51 @@ export default {
   methods:{
      
    submit(){
-        
-        var formData = new FormData();
+     if (this.post.birthdate && this.post.city && this.post.university &&this.post.faculty && this.post.phone &&this.post.about)
+         {
+            var formData = new FormData();
         formData.append("birthdate",this.post.birthdate);
         formData.append("city", this.post.city);
-        formData.append(" university", this.post. university);
+        formData.append("university", this.post.university);
         formData.append("faculty", this.post.faculty);
         formData.append("phone", this.post.phone);
         formData.append("about", this.post.about);
-        formData.append('file', this.post.cv);
-     
-
-
-      
-        // this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
-        this.$axios.get(endpoint.auth.profile)
-        .then(response => {
-
-          console.log("basarili get")
-         if(!response.data)
-         {
-        this.$axios.post(endpoint.auth.profile,{formData,
-        token:localStorage.getItem("token")
-        })
-       
-       .then(response =>{
-         
-         console.log(response.data)
-         
-         this.post ={}
-       })
-         }
-         else{
-           this.$axios.patch(endpoint.auth.profile.replace,{
-             formData,
-             token:localStorage.getItem("token")
-           })
+         this.$axios.patch(endpoint.auth.update,
+             formData
+           
+           )
         .then(response =>{
         console.log(response,"basarili patch")
+        console.log()
          this.post ={}
        })
-         }
          
-        })
+
       
      
        .catch(e => console.log(e))
         
+         }
+         else{
+           this.alert=true
+         }
+       
+        
+     
+        
+
+      
+        // this.$axios.post(endpoint.auth.profile.replace('{id}','6107ae9e4d82ad3944416aae'),formData)
+       
+          
 
       },
-      handleFileUpload(){
-      const file = this.$refs.file.files[0];
-      this.post.cv = file
-      this.post.imageUrl = URL.createObjectURL(file)
-      console.log(this.post.imageUrl)
-      },
+      // handleFileUpload(){
+      // const file = this.$refs.file.files[0];
+      // this.post.cv = file
+      // this.post.imageUrl = URL.createObjectURL(file)
+      // console.log(this.post.imageUrl)
+      // },
    
     dategor(){
       this.date=!this.date

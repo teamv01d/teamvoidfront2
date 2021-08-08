@@ -54,41 +54,40 @@
         </v-btn>
       </template>
       <v-list  >
-        <v-list-item @click="sorularigor"> JAVA </v-list-item > 
-         <v-list-item  @click="python">  PYHTON  </v-list-item>
-         <v-list-item>  C# </v-list-item>
+        <v-list-item @click="vue"> VUE.JS </v-list-item > 
+         <v-list-item  @click="nest">  NEST.JS  </v-list-item>
+         <v-list-item @click="mongo" >   MONGO.DB </v-list-item>
+          <v-list-item @click="java" > JAVA </v-list-item>
       </v-list>
     </v-menu>
     <v-layout v-if="veritabani_q" row class="mt-10">
        <v-flex xs6 offset-3>  
-           <h2 class="mb-10 text-center"> {{konu}} SORULARI </h2>
+           <h2 class="mb-10 text-center"> {{subject}} SORULARI </h2>
         <div class="sorular" v-for="(sor,index) in v_sorular " :key="index" >
             <h3 > {{index+1}}. {{sor.question}}</h3>
-            <h3> A) {{sor.optiona}}  </h3>
-            <h3> B) {{sor.optionb}} </h3> 
-            <h3> C) {{sor.optionc}} </h3>
-            <h3> D) {{sor.optiond}} </h3>
+            <h3> A) {{sor.optionA}}  </h3>
+            <h3> B) {{sor.optionB}} </h3> 
+            <h3> C) {{sor.optionC}} </h3>
+            <h3> D) {{sor.optionD}} </h3>
+            <h3> Cevap : {{sor.answer}} </h3>
              <v-btn class="btn-right error" @click="qdelete(sor)"> <v-icon>delete</v-icon></v-btn>
             <v-btn  :disabled="checkstatus(sor)"  class=" mr-3 btn-right success"   @click="ekle(sor)" > Seç </v-btn>
            
         </div>
-        <Onizleme :ques="onizlemesoru" /> 
-        <v-btn @click="testikaydet" dark class=" ml-3 deep-purple darken-3"> Kaydet </v-btn>
+        <Onizleme :deneme ="onizlemesoru"/> 
+        <v-btn @click="testikaydet" dark class=" ml-3 deep-purple darken-3"> Kaydet </v-btn> <br>
+         <v-alert v-if="chck"
+      dense
+      text
+      type="success"   >
+  
+     Testiniz kaydedildi.
+    </v-alert>
       
       
        </v-flex>
    </v-layout>
-    <!-- <v-layout v-if="psorular" row class="mt-10">
-       <v-flex xs6 offset-3>  
-           <h2 class="mb-10 text-center"> {{konu}} SORULARI </h2>
-      <div>onizlemesoru</div>
-      
-        <v-btn dark class="ml-5 deep-purple darken-3"> Kaydet </v-btn>
-      
-      
-       </v-flex>
-   </v-layout> -->
-
+ 
            </div>
            
             <div  v-if="self_question">
@@ -123,31 +122,10 @@
 
                 </v-layout>
                
-                
-              <!-- <div  v-for="(i,index) in parseInt(sorusayisi)" :key="index">
              
-            <v-layout>
-             <v-flex :id="i" xs6 offset-3 class="testolustur mt-15"  >
-              <label for=""> {{i}}.Soruyu Giriniz:</label> <v-text-field @input="updateContent()"  > </v-text-field>
-              <label for=""> A Şıkkını Giriniz:</label><v-text-field :value="oldText" v-model="responses[index].asik"  > </v-text-field>
-              <label for=""> B Şıkkını Giriniz:</label><v-text-field  @input="updateB()"> </v-text-field>
-              <label for=""> C Şıkkını Giriniz:</label><v-text-field  @input="updateC()"  > </v-text-field>
-              <label for=""> D Şıkkını Giriniz:</label><v-text-field  @input="updateD()" > </v-text-field>
-                <v-select  :items="options"  @input="updateS"   filled   label="Doğru Cevap Şıkkını Seçiniz"></v-select>                         
-              <v-btn class="btn-right" @click="remove">Kaldır</v-btn>
-              <v-btn class="btn-right mr-3" @click="approve(index)">Onayla</v-btn>
-             </v-flex>                                                                                                                                                                         
-            </v-layout>
-            </div> -->
-            <!-- <v-layout row class="mt-10">
-             <v-flex xs6 offset-3>
-                 <Onizleme :ques="onizlemesoru2" />  -->
-            <!-- <v-btn dark class="deep-purple darken-3">  Kaydet</v-btn>
-               </v-flex> 
-            </v-layout> --> -->
           
             </div>
-             <Onizleme v-if="oniz" class="btn-right" :ques="onizlemesoru" /> 
+             <Onizleme v-if="oniz" class="btn-right" :deneme="onizlemesoru2" /> 
             </div>
               
             <br> <br>
@@ -166,6 +144,8 @@ import Navbar from '../components/CompanyNavbar'
 import Footer from '../components/Footer.vue'
 import axios from 'axios'
 import Onizleme from '../components/Onizleme.vue'
+import endpoint from "@/lib/api";
+
 
 
 
@@ -197,11 +177,12 @@ export default {
          yourself:false,
          veritabani_q:false,
          self_question:false,
-         konu:'',
+         subject:'',
          konu_liste:false,
          btn1:false,
          v_sorular:[],
          onizlemesoru:[],
+         onizlemesoru2:[],
          psorular:false,
          sorusayisi:null,
          sorusayisi2:'',
@@ -216,26 +197,24 @@ export default {
        
          bla:{
          question:"",
-         optipna:"",
-         optionb:"",
-         optionc:"",
-         optiond:"",
+         optionA:"",
+         optionB:"",
+         optionC:"",
+         optionD:"",
          answer:"",
          
          },
         oniz:false,
-         tarih:false
+         tarih:false,
+        chck:false
         
        }
     },
     methods:{
         y_testisecenek(){
-           setTimeout(() => this.yourself = !this.yourself,
-            1000);
-            setTimeout(() =>    this.veritabani=!this.veritabani,
-            1000);
-       
-       
+        
+       this.yourself=!this.yourself
+       this.veritabani=!this.veritabani
         this.testsorulari=false
         this.konu_liste=false
         this.self_question=false
@@ -246,24 +225,21 @@ export default {
             this.yourself=!this.yourself
             this.konu_liste=!this.konu_liste
         },
-        sorularigor(){
-         this.konu='JAVA',
+        vue(){
+         this.subject='VUE',
+         this.v_sorular=[]
+         this.onizlemesoru=[]
          this.veritabani_q=true
-         //this.psorular=false
          if(this.v_sorular==0){
            axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
           .then(response => {
             console.log("basarili java")
           let data = response.data;
-          console.log(data)
             
           for(let key in data){
             this.v_sorular.push({ ...data[key], id : key })
 
           }
-          console.log(this.veritabani_q)
-          console.log(this.v_sorular)
-          
          
         })
           .catch(e =>console.log(e)) 
@@ -272,6 +248,69 @@ export default {
         
       
         },
+        nest(){
+         this.v_sorular=[]
+         this.onizlemesoru=[]
+        this.veritabani_q=true 
+        this.subject='Nest'
+        if(this.v_sorular==0){
+           axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+          .then(response => {
+            console.log("basarili java")
+          let data = response.data;
+            
+          for(let key in data){
+            this.v_sorular.push({ ...data[key], id : key })
+
+          }
+         
+        })
+          .catch(e =>console.log(e)) 
+         }
+         
+        },
+         mongo(){
+         this.v_sorular=[]
+         this.onizlemesoru=[]
+        this.veritabani_q=true 
+          this.subject='MONGO'
+          if(this.v_sorular==0){
+           axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+          .then(response => {
+            console.log("basarili java")
+          let data = response.data;
+            
+          for(let key in data){
+            this.v_sorular.push({ ...data[key], id : key })
+
+          }
+         
+        })
+          .catch(e =>console.log(e)) 
+         }
+          
+        },
+         java(){
+         this.v_sorular=[]
+        this.onizlemesoru=[]
+        this.veritabani_q=true 
+        this.subject='JAVA'
+        if(this.v_sorular==0){
+           axios.get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+          .then(response => {
+            console.log("basarili java")
+          let data = response.data;
+            
+          for(let key in data){
+            this.v_sorular.push({ ...data[key], id : key })
+
+          }
+         
+        })
+          .catch(e =>console.log(e)) 
+         }
+         
+        },
 
       updateContent(value){
       this.bla.question=value
@@ -279,26 +318,21 @@ export default {
       }, 
       updateA(value){
       
-       this.bla.optiona=value
+       this.bla.optionA=value
          },
         
    
-        
-        // this.responses[index].asik=$event.target.value
-        
-    
      
       updateB(value){
-       this.bla.optionb=value
-        // this.bla.bsik=value;
-        // console.log(this.bla.bsik)
+       this.bla.optionB=value
+      
       },
       updateC(value){
-       this.bla.optionc=value
+       this.bla.optionC=value
         
       },
       updateD(value){
-         this.bla.optiond=value
+         this.bla.optionD=value
      
       },
       updateS(value){
@@ -306,14 +340,7 @@ export default {
         
       },
 
-        python(){
-         this.v_sorular=[]
-         this.onizlemesoru=0
-        this.veritabani_q=true 
-          //this.psorular=true
-          this.konu='Python'
-          console.log("basarili python")
-        },
+        
     
         kendinolustur(){
             this.veritabani=!this.veritabani
@@ -324,7 +351,9 @@ export default {
             this.oniz=false
           },
         ekle(sor){
-         this.onizlemesoru.push(sor);
+         console.log(sor)
+         this.onizlemesoru.push({ ...sor})
+         console.log(this.onizlemesoru)
        
         },
         checkstatus(sor){
@@ -361,30 +390,18 @@ export default {
               
             }
             
-            
-         
           
-          // let i=0;
-          // while(i < parseInt(this.sorusayisi))
-          // {
-          //   this.responses.push(this.bla);
-          //   i++;
-          // }
-          // console.log(this.responses)
-         
-         
         },
 
         testikaydet(){
-        axios.post("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json",...this.onizlemesoru)
-        .then(response => {
-          console.log(this.onizlemesoru)
-          console.log(response)
-        })
+          this.chck=true
         },
         approve(){
-          if(this.bla.question && this.bla.optiona && this.bla.optionb && this.bla.optionc && this.bla.optiond && this.bla.answer )
-        {  this.onizlemesoru.push({...this.bla})
+          console.log(this.bla)
+          if(this.bla.question && this.bla.optionA && this.bla.optionB && this.bla.optionC && this.bla.optionD && this.bla.answer )
+        {  console.log({...this.bla})
+           this.onizlemesoru2.push({...this.bla})
+           console.log(this.onizlemesoru)
           alert("sorular eklendi");
          
           this.testsorulari=false
@@ -396,21 +413,54 @@ export default {
           
           
         },
-        ilanolustur(){
-          if(this.end_date && this.explanation && this.advertisement_name &&this.city)
-          { // var date =new Date();
-          //let start_date = (date.getDay() + '/' + date.getMonth() + '/' + date.getFullYear())
-           console.log(this.tarih)
-          }
-          else(
-            alert("Gerekli Bilgileri Giriniz.")
-          )
 
+        ilanolustur(){
+          console.log(this.onizlemesoru[0].answer)
+          if(this.end_date && this.explanation && this.advertisement_name &&this.city)
+          { 
+            var zaman=new Date();
+            var zmn=zaman.getDay()+ '/'+ (zaman.getMonth()+1)+'/' +zaman.getFullYear();
+            var formData = new FormData();
+            formData.append("advertisement_name",this.advertisement_name);
+            formData.append("explanation",this.explanation);
+            formData.append("end_date",this.end_date);
+            formData.append("start_date",zmn);
+            formData.append("city",this.city);
+           
+           this.$axios.post(endpoint.auth.advertisement,formData)
+       .then(response =>{
+         console.log(response ,"basarili")
+       })
+
+
+             
+              var formData2=new FormData();
+           
+             formData2.append("question",this.onizlemesoru[0].question)
+              formData2.append("optionA",this.onizlemesoru[0].optionA)
+              formData2.append("optionB",this.onizlemesoru[0].optionB)
+              formData2.append("optionC",this.onizlemesoru[0].optionC)
+              formData2.append("optionD",this.onizlemesoru[0].optionD)
+              formData2.append("answer",this.onizlemesoru[0].answer)
+              formData2.append("subject",this.subject)
+             
+              this.$axios.post(endpoint.auth.testQuestion,formData2)
+                .then(response =>{
+                  console.log(response,"basarili post")
+                  })
+          
+      
+
+          }
+          else {
+            alert("Lütfen gerekli bilgileri giriniz..")
+          }
         }
        
        
-    }
     
+    
+}
 }
 </script>
 <style scoped>

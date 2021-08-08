@@ -2,6 +2,16 @@ export default {
     auth: {
         postCount: "applicant/create",
         profile: "users/profile",
+        update:"users",
+        upload:"upload",
+        uploadPhoto:"upload/photo",
+        cv:"users/cv",
+        register: "users/register",
+        login: "auth/login",
+        companyUpdate:"users/company",
+        companyRegister: "users/company/register",
+        advertisement:"advertisement/create",
+        testQuestion:"testquestion/create"
         photo: "users/photo",
         register: "users/register",
         login: "auth/login",
