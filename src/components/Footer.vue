@@ -4,7 +4,7 @@
       <v-card-title class="deep-purple darken-4">
         <strong>Genç yetenekler için açılan fırsat kapılarına ulaş!</strong>
         <v-spacer></v-spacer>
-        <router-link color="white" to="/hakkimizda">
+        <router-link color="white" to="/AboutUs">
           <span color="wihite"> HAKKIMIZDA </span>
           <v-icon> keyboard_arrow_right</v-icon>
         </router-link>
