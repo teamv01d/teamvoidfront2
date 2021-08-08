@@ -3,7 +3,7 @@ export default {
         profile: "users/profile",
         update:"users",
         upload:"upload",
-        photo:"users/photo",
+        photo:"upload/photo",
         cv:"users/cv",
         register: "users/register",
         login: "auth/login",
