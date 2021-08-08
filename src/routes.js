@@ -8,6 +8,8 @@ import TestSolve from './views/TestSolve.vue'
 import CompanyApplicants from './views/CompanyApplicants.vue'
 import IndividualApplicants from './views/IndividualApplicants.vue'
 import AboutUs from './views/AboutUs.vue'
+import IlanDetails from './views/IlanDetails.vue';
+import Ilanlar from './views/Ilanlar.vue';
 
 export const routes = [
     {
@@ -29,6 +31,16 @@ export const routes = [
         path: '/advertisement',
         name: 'advertisement',
         component: AddAdvertisemnt
+    },
+    {
+        path: '/ilanlar',
+        name: 'ilanlar',
+        component: Ilanlar
+    },
+    {
+        path: '/ilan/:id',
+        name: 'IlanDetail',
+        component: IlanDetails
     },
     {
         path: '/company',
