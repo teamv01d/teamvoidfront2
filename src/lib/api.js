@@ -8,5 +8,11 @@ export default {
         companyRegister: "users/company/register",
         testSolve: "advertisementquestion",
         companyApplicants: "applicant/appusers"
+    },
+    advertisement: {
+        get: "advertisement",
+        getOne: "advertisement/:id",
+        update: "advertisement/:id",
+        delete: "advertisement/:id"
     }
 }
