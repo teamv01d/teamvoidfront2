@@ -39,7 +39,6 @@
                         class="rounded-0"
                       />
                       <v-btn
-                        @click="signin"
                         type="submit"
                         class="rounded-0"
                         color="#02c3bd"
@@ -209,6 +208,11 @@ export default {
           this.$router.push("/testSolve");
         })
         .catch((e) => console.log(e));
+
+      if (this.submitted == false) {
+        alert("E posta veya şifre yanlış.");
+        this.user = "";
+      }
     },
 
     onSubmit() {
