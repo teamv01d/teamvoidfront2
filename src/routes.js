@@ -6,6 +6,12 @@ import CompanyProfile from './views/CompanyProfile'
 import AddAdvertisemnt from './views/AddAdvertisemnt'
 import CompanyLogin from './views/CompanyLogin.vue'
 import TestSolve from './views/TestSolve.vue'
+import CompanyApplicants from './views/CompanyApplicants.vue'
+import IndividualApplicants from './views/IndividualApplicants.vue'
+import AboutUs from './views/AboutUs.vue'
+import IlanDetails from './views/IlanDetails.vue';
+import Ilanlar from './views/Ilanlar.vue';
+
 export const routes = [
     {
         path: '/',
@@ -13,22 +19,32 @@ export const routes = [
         component: IndividualLogin
     },
     {
-        path:'/profile',
-        name:'profile',
+        path: '/profile',
+        name: 'profile',
         component: Profile
-      },
-      {
-        path:'/company/profile',
-        name:'company',
+    },
+    {
+        path: '/company/profile',
+        name: 'company',
         component: CompanyProfile
-      },
-      {
-        path:'/advertisement',
-        name:'advertisement',
+    },
+    {
+        path: '/advertisement',
+        name: 'advertisement',
         component: AddAdvertisemnt
-      },
-        {
-          path: '/company',
+    },
+    {
+        path: '/ilanlar',
+        name: 'ilanlar',
+        component: Ilanlar
+    },
+    {
+        path: '/ilan/:id',
+        name: 'IlanDetail',
+        component: IlanDetails
+    },
+    {
+        path: '/company',
         name: 'CompanyLogin',
         component: CompanyLogin
     },
@@ -41,5 +57,23 @@ export const routes = [
       path: '/application',
       name: 'application',
       component: Application
-  },
+    },
+        path: '/companyApplicants',
+        name: 'CompanyApplicants',
+        component: CompanyApplicants
+    },
+    {
+        path: '/individualApplicants',
+        name: 'IndividualApplicants',
+        component: IndividualApplicants
+    },
+    {
+        path: '*',
+        redirect: '/'
+    },
+    {
+        path: '/AboutUs',
+        name: 'AboutUs',
+        component: AboutUs
+    },
 ]

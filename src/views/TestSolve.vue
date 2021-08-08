@@ -1,18 +1,21 @@
 <template>
   <div>
-    <app-test-info-card />
+    <app-navbar />
     <app-test-question-card />
+    <app-footer />
   </div>
 </template>
 
 <script>
-import TestInfoCard from "../components/TestInfoCard.vue";
 import TestQuestionCard from "../components/TestQuestionCard.vue";
+import Footer from "../components/Footer.vue";
+import Navbar from "../components/Navbar.vue";
 
 export default {
   components: {
-    appTestInfoCard: TestInfoCard,
     appTestQuestionCard: TestQuestionCard,
+    appFooter: Footer,
+    appNavbar: Navbar,
   },
 };
 </script>

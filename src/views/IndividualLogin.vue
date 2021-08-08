@@ -50,7 +50,6 @@
                         class="rounded-0"
                       />
                       <v-btn
-                        @click="signin"
                         type="submit"
                         class="rounded-0"
                         color="#02c3bd"
