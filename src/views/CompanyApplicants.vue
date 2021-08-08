@@ -83,7 +83,14 @@
                       </p>
                       <p><u>Bölüm:</u> {{ item.faculty }}</p>
                       <p><u>Hakkında:</u> {{ item.about }}</p>
-                      <v-btn color="#02c3bd" dark large> ÖZGEÇMİŞ İNDİR</v-btn>
+
+                      <v-btn
+                        color="#02c3bd"
+                        dark
+                        large
+                        @click="openCV(item.cvUrl)"
+                        >ÖZGEÇMİŞ İNDİR</v-btn
+                      >
                     </li>
                   </div>
                 </v-card-text>
@@ -111,6 +118,7 @@ export default {
       applicantsList: [],
       solvedInfo: "Yetenek testi çözüldü....",
       unsolvedInfo: "Yetenek testi çözülmedi....",
+      cvUrl: "",
     };
   },
   created() {
@@ -129,6 +137,10 @@ export default {
           }
         })
         .catch((e) => console.log(e));
+    },
+    openCV(value) {
+      window.open(value);
+      console.log(value);
     },
   },
 };

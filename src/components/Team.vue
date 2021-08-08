@@ -12,7 +12,12 @@
     </p>
 
     <v-container fluid>
-      <v-container style="height: 100%" row wrap class="text-center">
+      <v-container
+        style="height: 100%"
+        row
+        wrap
+        class="justify-center text-center"
+      >
         <v-flex xs12 sm6 md4 lg3 v-for="person in team" :key="person.name">
           <v-avatar size="200">
             <img :src="person.avatar" />
@@ -29,7 +34,12 @@
         </v-flex>
       </v-container>
 
-      <v-container style="height: 100%" row wrap class="justify-center">
+      <v-container
+        style="height: 100%"
+        row
+        wrap
+        class="justify-center text-center"
+      >
         <v-flex xs12 sm6 md4 lg3 v-for="person in team2" :key="person.name2">
           <v-avatar size="200">
             <img :src="person.avatar2" />
