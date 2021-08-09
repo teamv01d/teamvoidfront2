@@ -40,13 +40,12 @@
           <v-text-field label="Title" v-model="post.phone"> </v-text-field>
           <label for=""> 6)Kendinizi kısaca anlatınız..</label>
           <v-textarea label="Title" v-model="post.about"> </v-textarea>
-
-          <v-btn right flat dark class="deep-purple darken-3" @click="submit"
-            >Kaydet</v-btn
-          >
           <v-alert v-if="alert" dense outlined type="error">
             Lütfen tüm bilgileri giriniz !
           </v-alert>
+          <v-btn right flat dark class="deep-purple darken-3" @click="submit"
+            >Kaydet</v-btn
+          >
         </v-form>
       </v-cart-text>
     </v-card>
