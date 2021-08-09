@@ -534,7 +534,6 @@ export default {
     },
 
     ilanolustur() {
-      console.log(this.onizlemesoru[0].answer);
       if (
         this.end_date &&
         this.explanation &&
@@ -543,11 +542,9 @@ export default {
       ) {
         var zaman = new Date();
         var zmn =
-          zaman.getDay() +
-          "/" +
-          (zaman.getMonth() + 1) +
-          "/" +
-          zaman.getFullYear();
+         zaman.getFullYear() + "-" +  zaman.getMonth() + "-" +
+          zaman.getDate ;
+       
         var formData = new FormData();
         formData.append("advertisement_name", this.advertisement_name);
         formData.append("explanation", this.explanation);

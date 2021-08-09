@@ -69,7 +69,7 @@ export default {
     },
     methods:{
       submit(){
-        if(this.post.city && this.post.company_name && this.web_address && this.phone && this.about)
+        if(this.post.city && this.post.company_name && this.post.web_address && this.post.phone && this.post.about)
         {
             var formData = new FormData();
         formData.append("company_name",this.post.company_name);
