@@ -54,10 +54,11 @@ export const routes = [
         component: TestSolve
     },
     {
-      path: '/application',
-      name: 'application',
-      component: Application
+        path: '/application',
+        name: 'application',
+        component: Application
     },
+    {
         path: '/companyApplicants',
         name: 'CompanyApplicants',
         component: CompanyApplicants
