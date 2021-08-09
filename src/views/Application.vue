@@ -4,7 +4,7 @@
     <v-container class="mt-10">
       <v-layout row>
         <v-flex xs10>
-          <h1 class="text-center">{{}}</h1>
+          <h1 class="text-center"></h1>
         </v-flex>
       </v-layout>
 
@@ -102,11 +102,9 @@
             <v-layout class="test mt-10">
               <v-flex xs10>
                 <h2 class="mb-2">Yetenek Testi</h2>
-                <h4 class="mb-1"><v-icon>timer</v-icon> &nbsp;&nbsp; 30dk</h4>
-                <h4><v-icon>computer</v-icon> &nbsp;&nbsp; JAVA</h4>
               </v-flex>
               <v-flex xs2>
-                <v-btn @click="start" dark class="btn1 deep-purple darken-4">
+                <v-btn @click="start" dark class="mb-2 deep-purple darken-4">
                   BAŞLA
                 </v-btn>
               </v-flex>
@@ -148,7 +146,7 @@ export default {
         })
 
         .catch((e) => console.log(e));
-
+      alert("Başvuru sonucunuz için kurum tarafından iletişime geçilecektir.");
       this.$router.push("/testSolve");
     },
   },
@@ -190,7 +188,6 @@ h3 {
 }
 .btn1 {
   color: red;
-  margin-top: 40px;
 }
 .not {
   font-size: 20px;

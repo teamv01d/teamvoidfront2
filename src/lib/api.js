@@ -13,7 +13,7 @@ export default {
         photo: "users/photo",
         login: "auth/login",
         companyRegister: "users/company/register",
-        testSolve: "advertisementquestion",
+        testSolve: "testquestion",
         companyApplicants: "applicant/appusers",
         advertisement: "advertisement",
         individualApplicants: "applicant/appusers",

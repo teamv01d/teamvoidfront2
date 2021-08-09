@@ -19,11 +19,6 @@
           <span> İlanlar</span> <v-icon right>library_books</v-icon>
         </v-btn>
       </router-link>
-      <router-link to="/individualApplicants" tag="v-btn">
-        <v-btn color="white" class="mr-2 white" flat value="profile">
-          <span>Başvurularım</span> <v-icon right>call_made</v-icon>
-        </v-btn>
-      </router-link>
       <router-link to="/logout" tag="v-btn">
         <v-btn
           @click="clearToken()"

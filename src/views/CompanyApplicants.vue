@@ -14,7 +14,7 @@
                 <v-row align="center" class="spacer" no-gutters>
                   <v-col cols="4" sm="2" md="1">
                     <v-avatar size="80">
-                      <li v-for="item in data.usersprofile" :key="item">
+                      <li v-for="item in data.usersProfile" :key="item">
                         <v-img
                           :src="item.photo"
                           alt="user"
@@ -26,7 +26,7 @@
                   </v-col>
 
                   <v-col class="hidden-xs-only content-size" sm="5" md="3">
-                    <li v-for="item in data.usersprofile" :key="item">
+                    <li v-for="item in data.usersProfile" :key="item">
                       {{ item.name }} {{ item.surname }}
                     </li>
                   </v-col>
@@ -72,7 +72,7 @@
                 <v-divider></v-divider>
                 <v-card-text>
                   <div>
-                    <li v-for="item in data.usersprofile" :key="item">
+                    <li v-for="item in data.usersProfile" :key="item">
                       <p><u>Doğum Tarihi:</u> {{ item.birthdate }}</p>
                       <p><u>Yaşadığı Şehir:</u> {{ item.city }}</p>
                       <p><u>Telefon No:</u> {{ item.phone }}</p>

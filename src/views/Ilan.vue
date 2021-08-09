@@ -1,8 +1,8 @@
 <template>
   <div class="Container">
     <v-card
+      max-height="650"
       :elevation="8"
-      max-height="550"
       slot="cover"
       :loading="loading"
       class="mx-10 my-16 background-color"
@@ -25,6 +25,12 @@
       <v-card-title>{{ ilan.advertisement_name }}</v-card-title>
 
       <v-card-text>
+        <div class="my-4 text-subtitle-1">
+          <span class="location-icon"></span>
+          İlan Başlangıç Tarihi: {{ ilan.start_date }} <br />
+          İlan Bitiş Tarihi: {{ ilan.end_date }}
+        </div>
+
         <v-col align="start" class="mx-0 CompanyName">
           <v-card-text>{{ ilan.companyID.company_name }}</v-card-text>
         </v-col>
@@ -37,26 +43,14 @@
 
       <v-divider class="mx-4"></v-divider>
 
-      <v-card-title>Gereksinim</v-card-title>
-
-      <v-card-text>
-        <v-chip-group
-          v-model="selection"
-          active-class="deep-purple accent-4 white--text"
-          column
-        >
-          <v-chip>Java</v-chip>
-        </v-chip-group>
-      </v-card-text>
-
       <v-card-actions>
         <v-btn
           style="padding-top: 0px"
           color="deep-purple lighten-2"
           text
-          @click="reserve(ilan._id)"
+          @click="toStartTest()"
         >
-          Details
+          Başvuru Yap
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -74,6 +68,9 @@ export default {
   methods: {
     reserve(id) {
       this.$router.push({ name: "IlanDetail", params: { id: id } });
+    },
+    toStartTest() {
+      this.$router.push("/application");
     },
   },
 };
