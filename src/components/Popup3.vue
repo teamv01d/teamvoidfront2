@@ -69,7 +69,7 @@ export default {
       };
 
       this.$axios
-        .post(endpoint.auth.uploadPhoto, data, config)
+        .post(endpoint.auth.photo, data, config)
         .then((response) => {
           console.log(response);
         });
