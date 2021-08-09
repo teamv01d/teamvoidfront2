@@ -1,17 +1,14 @@
 export default {
     auth: {
-        postCount: "applicant/create",
         profile: "users/profile",
         update: "users",
         upload: "upload",
-        uploadPhoto: "upload/photo",
+        photo: "upload/photo",
+        photoChange: "users/photo",
         cv: "users/cv",
         register: "users/register",
-        companyUpdate: "users/company",
-        advertisementCreate: "advertisement/create",
-        testQuestion: "testquestion/create",
-        photo: "users/photo",
         login: "auth/login",
+        companyUpdate: "users/company",
         companyRegister: "users/company/register",
         testSolve: "testquestion",
         companyApplicants: "applicant/appusers",
@@ -22,6 +19,11 @@ export default {
         get: "advertisement",
         getOne: "advertisement/:id",
         update: "advertisement/:id",
-        delete: "advertisement/:id"
+        delete: "advertisement/:id",
+        advertisementCreate: "advertisement/create",
+        testQuestion: "advquestion/create",
+        testQ: "testquestion"
+
+
     }
 }

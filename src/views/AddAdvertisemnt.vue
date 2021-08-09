@@ -80,8 +80,8 @@
           </v-switch>
         </v-layout>
 
-        <div v-if="konu_liste">
-          <v-menu offset-y class="mt-10 mb-10">
+        <!-- <div v-if="konu_liste"> -->
+          <!-- <v-menu offset-y class="mt-10 mb-10">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 class="deep-purple darken-3 mt-5"
@@ -98,10 +98,10 @@
               <v-list-item @click="mongo"> MONGO.DB </v-list-item>
               <v-list-item @click="java"> JAVA </v-list-item>
             </v-list>
-          </v-menu>
+          </v-menu> -->
           <v-layout v-if="veritabani_q" row class="mt-10">
             <v-flex xs6 offset-3>
-              <h2 class="mb-10 text-center">{{ subject }} SORULARI</h2>
+              <h2 class="mb-10 text-center">Veri Tabanı Soruları</h2>
               <div
                 class="sorular"
                 v-for="(sor, index) in v_sorular"
@@ -138,7 +138,7 @@
               </v-alert>
             </v-flex>
           </v-layout>
-        </div>
+        <!-- </div> -->
 
         <div v-if="self_question">
           <v-layout row>
@@ -200,7 +200,7 @@
               </v-flex>
             </v-layout>
           </div>
-          <Onizleme v-if="oniz" class="btn-right" :deneme="onizlemesoru2" />
+          <Onizleme v-if="oniz" class="btn-right" :deneme="onizlemesoru" />
         </div>
 
         <br />
@@ -224,7 +224,7 @@
 <script>
 import Navbar from "../components/CompanyNavbar";
 import Footer from "../components/Footer.vue";
-import axios from "axios";
+// import axios from "axios";
 import Onizleme from "../components/Onizleme.vue";
 import endpoint from "@/lib/api";
 
@@ -327,12 +327,11 @@ export default {
       yourself: false,
       veritabani_q: false,
       self_question: false,
-      subject: "",
+      // subject: "",
       konu_liste: false,
       btn1: false,
       v_sorular: [],
       onizlemesoru: [],
-      onizlemesoru2: [],
       psorular: false,
       sorusayisi: null,
       sorusayisi2: "",
@@ -358,92 +357,108 @@ export default {
   },
   methods: {
     y_testisecenek() {
+      this.veritabani_q=false
       this.yourself = !this.yourself;
       this.veritabani = !this.veritabani;
       this.testsorulari = false;
-      this.konu_liste = false;
+   
+      // this.konu_liste = false;
       this.self_question = false;
       this.btn1 = false;
     },
     secenekgoster() {
+      this.veritabani_q=!this.veritabani_q
       this.yourself = !this.yourself;
       this.konu_liste = !this.konu_liste;
-    },
-    vue() {
-      (this.subject = "VUE"), (this.v_sorular = []);
-      this.onizlemesoru = [];
-      this.veritabani_q = true;
-      if (this.v_sorular == 0) {
-        axios
-          .get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+      
+        this.$axios
+          .get(endpoint.auth.testQ)
           .then((response) => {
-            console.log("basarili java");
+            console.log(response, "basarili");
             let data = response.data;
 
             for (let key in data) {
               this.v_sorular.push({ ...data[key], id: key });
             }
-          })
-          .catch((e) => console.log(e));
-      }
-    },
-    nest() {
-      this.v_sorular = [];
-      this.onizlemesoru = [];
-      this.veritabani_q = true;
-      this.subject = "Nest";
-      if (this.v_sorular == 0) {
-        axios
-          .get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
-          .then((response) => {
-            console.log("basarili java");
-            let data = response.data;
+          });
 
-            for (let key in data) {
-              this.v_sorular.push({ ...data[key], id: key });
-            }
-          })
-          .catch((e) => console.log(e));
-      }
-    },
-    mongo() {
-      this.v_sorular = [];
-      this.onizlemesoru = [];
-      this.veritabani_q = true;
-      this.subject = "MONGO";
-      if (this.v_sorular == 0) {
-        axios
-          .get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
-          .then((response) => {
-            console.log("basarili java");
-            let data = response.data;
 
-            for (let key in data) {
-              this.v_sorular.push({ ...data[key], id: key });
-            }
-          })
-          .catch((e) => console.log(e));
-      }
     },
-    java() {
-      this.v_sorular = [];
-      this.onizlemesoru = [];
-      this.veritabani_q = true;
-      this.subject = "JAVA";
-      if (this.v_sorular == 0) {
-        axios
-          .get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
-          .then((response) => {
-            console.log("basarili java");
-            let data = response.data;
+    // vue() {
+    //   (this.subject = "VUE"), (this.v_sorular = []);
+    //   this.onizlemesoru = [];
+    //   this.veritabani_q = true;
+    //   if (this.v_sorular == 0) {
+    //     axios
+    //       .get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+    //       .then((response) => {
+    //         console.log("basarili java");
+    //         let data = response.data;
 
-            for (let key in data) {
-              this.v_sorular.push({ ...data[key], id: key });
-            }
-          })
-          .catch((e) => console.log(e));
-      }
-    },
+    //         for (let key in data) {
+    //           this.v_sorular.push({ ...data[key], id: key });
+    //         }
+    //       })
+    //       .catch((e) => console.log(e));
+    //   }
+    // },
+    // nest() {
+    //   this.v_sorular = [];
+    //   this.onizlemesoru = [];
+    //   this.veritabani_q = true;
+    //   this.subject = "Nest";
+    //   if (this.v_sorular == 0) {
+    //     axios
+    //       .get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+    //       .then((response) => {
+    //         console.log("basarili java");
+    //         let data = response.data;
+
+    //         for (let key in data) {
+    //           this.v_sorular.push({ ...data[key], id: key });
+    //         }
+    //       })
+    //       .catch((e) => console.log(e));
+    //   }
+    // },
+    // mongo() {
+    //   this.v_sorular = [];
+    //   this.onizlemesoru = [];
+    //   this.veritabani_q = true;
+    //   this.subject = "MONGO";
+    //   if (this.v_sorular == 0) {
+    //     axios
+    //       .get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+    //       .then((response) => {
+    //         console.log("basarili java");
+    //         let data = response.data;
+
+    //         for (let key in data) {
+    //           this.v_sorular.push({ ...data[key], id: key });
+    //         }
+    //       })
+    //       .catch((e) => console.log(e));
+    //   }
+    // },
+    // java() {
+    //   this.v_sorular = [];
+    //   this.onizlemesoru = [];
+    //   this.veritabani_q = true;
+    //   this.subject = "JAVA";
+    //   if (this.v_sorular == 0) {
+    //     axios
+    //       .get("https://profile-67e3f-default-rtdb.firebaseio.com/posts.json")
+    //       .then((response) => {
+    //         console.log("basarili java");
+    //         let data = response.data;
+
+    //         for (let key in data) {
+    //           this.v_sorular.push({ ...data[key], id: key });
+    //         }
+    //       })
+    //       .catch((e) => console.log(e));
+    //   }
+    // },
 
     updateContent(value) {
       this.bla.question = value;
@@ -468,6 +483,7 @@ export default {
     kendinolustur() {
       this.veritabani = !this.veritabani;
       this.self_question = !this.self_question;
+
       this.testsorulari = false;
       this.konu_liste = false;
       this.btn1 = false;
@@ -522,7 +538,7 @@ export default {
         this.bla.answer
       ) {
         console.log({ ...this.bla });
-        this.onizlemesoru2.push({ ...this.bla });
+        this.onizlemesoru.push({ ...this.bla });
         console.log(this.onizlemesoru);
         alert("sorular eklendi");
 
@@ -534,7 +550,6 @@ export default {
     },
 
     ilanolustur() {
-      console.log(this.onizlemesoru[0].answer);
       if (
         this.end_date &&
         this.explanation &&
@@ -543,11 +558,9 @@ export default {
       ) {
         var zaman = new Date();
         var zmn =
-          zaman.getDay() +
-          "/" +
-          (zaman.getMonth() + 1) +
-          "/" +
-          zaman.getFullYear();
+         zaman.getFullYear() + "-" +  (zaman.getMonth() +1 ) + "-" +
+          zaman.getDate() ;
+       
         var formData = new FormData();
         formData.append("advertisement_name", this.advertisement_name);
         formData.append("explanation", this.explanation);
@@ -561,16 +574,27 @@ export default {
             console.log(response, "basarili");
           });
 
-        var formData2 = new FormData();
+       var formData2 = new FormData();
+       
+ 
+         formData2.append("question", this.onizlemesoru[0].question);
+         formData2.append("optionA", this.onizlemesoru[0].optionA);
+         formData2.append("optionB", this.onizlemesoru[0].optionB);
+         formData2.append("optionC", this.onizlemesoru[0].optionC);
+         formData2.append("optionD", this.onizlemesoru[0].optionD);
+         formData2.append("answer", this.onizlemesoru[0].answer);
 
-        formData2.append("question", this.onizlemesoru[0].question);
-        formData2.append("optionA", this.onizlemesoru[0].optionA);
-        formData2.append("optionB", this.onizlemesoru[0].optionB);
-        formData2.append("optionC", this.onizlemesoru[0].optionC);
-        formData2.append("optionD", this.onizlemesoru[0].optionD);
-        formData2.append("answer", this.onizlemesoru[0].answer);
-        formData2.append("subject", this.subject);
+    
 
+        
+       
+        
+        // formData2.append("question", this.onizlemesoru[1].question);
+        // formData2.append("optionA", this.onizlemesoru[1].optionA);
+        // formData2.append("optionB", this.onizlemesoru[1].optionB);
+        // formData2.append("optionC", this.onizlemesoru[1].optionC);
+        // formData2.append("optionD", this.onizlemesoru[1].optionD);
+        // formData2.append("answer", this.onizlemesoru[1].answer);
         this.$axios
           .post(endpoint.auth.testQuestion, formData2)
           .then((response) => {
